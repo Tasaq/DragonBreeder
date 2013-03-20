@@ -1,0 +1,752 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpDX.Toolkit.Compiler.2.5.0.0.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.CharacterRegion</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.FlattenIEnumerableOfCharacterRegion">
+            <summary>Sets the shim of CharacterRegion.Flatten(IEnumerable`1&lt;CharacterRegion&gt; regions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.StaticConstructor">
+            <summary>Sets the shim of CharacterRegion.CharacterRegion()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion._Flattenb__4CharacterRegion">
+            <summary>Sets the shim of CharacterRegion.&lt;Flatten&gt;b__4(CharacterRegion region)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegion.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.CharacterRegionTypeConverter</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.#ctor(SharpDX.Toolkit.Graphics.CharacterRegionTypeConverter)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.CanConvertFromITypeDescriptorContextType">
+            <summary>Sets the shim of CharacterRegionTypeConverter.CanConvertFrom(ITypeDescriptorContext context, Type sourceType)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.Constructor">
+            <summary>Sets the shim of CharacterRegionTypeConverter.CharacterRegionTypeConverter()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.ConvertCharacterString">
+            <summary>Sets the shim of CharacterRegionTypeConverter.ConvertCharacter(String value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.StaticConstructor">
+            <summary>Sets the shim of CharacterRegionTypeConverter.CharacterRegionTypeConverter()</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimCharacterRegionTypeConverter.AllInstances.CanConvertFromITypeDescriptorContextType">
+            <summary>Sets the shim of CharacterRegionTypeConverter.CanConvertFrom(ITypeDescriptorContext context, Type sourceType)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.ContentCompilerResult</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.#ctor(SharpDX.Toolkit.Graphics.ContentCompilerResult)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.Constructor">
+            <summary>Sets the shim of ContentCompilerResult.ContentCompilerResult()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.HasErrorsGet">
+            <summary>Sets the shim of ContentCompilerResult.get_HasErrors()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.IsContentGeneratedGet">
+            <summary>Sets the shim of ContentCompilerResult.get_IsContentGenerated()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.IsContentGeneratedSetBoolean">
+            <summary>Sets the shim of ContentCompilerResult.set_IsContentGenerated(Boolean value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.LoggerGet">
+            <summary>Sets the shim of ContentCompilerResult.get_Logger()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.LoggerSetLogger">
+            <summary>Sets the shim of ContentCompilerResult.set_Logger(Logger value)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances.HasErrorsGet">
+            <summary>Sets the shim of ContentCompilerResult.get_HasErrors()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances.IsContentGeneratedGet">
+            <summary>Sets the shim of ContentCompilerResult.get_IsContentGenerated()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances.IsContentGeneratedSetBoolean">
+            <summary>Sets the shim of ContentCompilerResult.set_IsContentGenerated(Boolean value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances.LoggerGet">
+            <summary>Sets the shim of ContentCompilerResult.get_Logger()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimContentCompilerResult.AllInstances.LoggerSetLogger">
+            <summary>Sets the shim of ContentCompilerResult.set_Logger(Logger value)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.EffectCompiler</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.#ctor(SharpDX.Toolkit.Graphics.EffectCompiler)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.Bind(SharpDX.Toolkit.Graphics.IEffectCompiler)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.CheckForChangesString">
+            <summary>Sets the shim of EffectCompiler.CheckForChanges(String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.CompileFromFileStringEffectCompilerFlagsListOfEffectDataShaderMacroListOfStringBooleanString">
+            <summary>Sets the shim of EffectCompiler.CompileFromFile(String filePath, EffectCompilerFlags flags, List`1&lt;ShaderMacro&gt; macros, List`1&lt;String&gt; includeDirectoryList, Boolean alloDynamicCompiling, String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.CompileStringStringEffectCompilerFlagsListOfEffectDataShaderMacroListOfStringBooleanString">
+            <summary>Sets the shim of EffectCompiler.Compile(String sourceCode, String filePath, EffectCompilerFlags flags, List`1&lt;ShaderMacro&gt; macrosArgs, List`1&lt;String&gt; includeDirectoryList, Boolean allowDynamicCompiling, String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.Constructor">
+            <summary>Sets the shim of EffectCompiler.EffectCompiler()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.DisassembleShaderEffectDataShader">
+            <summary>Sets the shim of EffectCompiler.DisassembleShader(Shader shader)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.GetDependencyFileNameFromSourcePathString">
+            <summary>Sets the shim of EffectCompiler.GetDependencyFileNameFromSourcePath(String pathToFxFile)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.LoadDependencyString">
+            <summary>Sets the shim of EffectCompiler.LoadDependency(String dependencyFilePath)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.CheckForChangesString">
+            <summary>Sets the shim of EffectCompiler.CheckForChanges(String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.CompileFromFileStringEffectCompilerFlagsListOfEffectDataShaderMacroListOfStringBooleanString">
+            <summary>Sets the shim of EffectCompiler.CompileFromFile(String filePath, EffectCompilerFlags flags, List`1&lt;ShaderMacro&gt; macros, List`1&lt;String&gt; includeDirectoryList, Boolean alloDynamicCompiling, String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.CompileStringStringEffectCompilerFlagsListOfEffectDataShaderMacroListOfStringBooleanString">
+            <summary>Sets the shim of EffectCompiler.Compile(String sourceCode, String filePath, EffectCompilerFlags flags, List`1&lt;ShaderMacro&gt; macrosArgs, List`1&lt;String&gt; includeDirectoryList, Boolean allowDynamicCompiling, String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.DisassembleShaderEffectDataShader">
+            <summary>Sets the shim of EffectCompiler.DisassembleShader(Shader shader)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.GetDependencyFileNameFromSourcePathString">
+            <summary>Sets the shim of EffectCompiler.GetDependencyFileNameFromSourcePath(String pathToFxFile)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectCompiler.AllInstances.LoadDependencyString">
+            <summary>Sets the shim of EffectCompiler.LoadDependency(String dependencyFilePath)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.EffectDataCodeWriter</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.#ctor(SharpDX.Toolkit.Graphics.EffectDataCodeWriter)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.Constructor">
+            <summary>Sets the shim of EffectDataCodeWriter.EffectDataCodeWriter()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.WriteEffectDataTextWriter">
+            <summary>Sets the shim of EffectDataCodeWriter.Write(EffectData effectData, TextWriter writer)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimEffectDataCodeWriter.AllInstances.WriteEffectDataTextWriter">
+            <summary>Sets the shim of EffectDataCodeWriter.Write(EffectData effectData, TextWriter writer)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.FileDependencyList</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.#ctor(SharpDX.Toolkit.Graphics.FileDependencyList)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.ICollection)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.IDictionary)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.IEnumerable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.Generic.ICollection{System.Collections.Generic.KeyValuePair{System.String,System.DateTime}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.DateTime}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Collections.Generic.IDictionary{System.String,System.DateTime})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Runtime.Serialization.IDeserializationCallback)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AddDefaultDependencies">
+            <summary>Sets the shim of FileDependencyList.AddDefaultDependencies()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AddDependencyPathString">
+            <summary>Sets the shim of FileDependencyList.AddDependencyPath(String filePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.CheckForChanges">
+            <summary>Sets the shim of FileDependencyList.CheckForChanges()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.CheckForChangesString">
+            <summary>Sets the shim of FileDependencyList.CheckForChanges(String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.Constructor">
+            <summary>Sets the shim of FileDependencyList.FileDependencyList()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.FromFileRawString">
+            <summary>Sets the shim of FileDependencyList.FromFileRaw(String dependencyFilePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.FromFileString">
+            <summary>Sets the shim of FileDependencyList.FromFile(String file)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.FromReaderTextReader">
+            <summary>Sets the shim of FileDependencyList.FromReader(TextReader textReader)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.FromStreamStream">
+            <summary>Sets the shim of FileDependencyList.FromStream(Stream textStream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.GetDependencyFileNameFromSourcePathString">
+            <summary>Sets the shim of FileDependencyList.GetDependencyFileNameFromSourcePath(String pathToFxFile)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.SaveStream">
+            <summary>Sets the shim of FileDependencyList.Save(Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.SaveString">
+            <summary>Sets the shim of FileDependencyList.Save(String file)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.SaveTextWriter">
+            <summary>Sets the shim of FileDependencyList.Save(TextWriter writer)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.StaticConstructor">
+            <summary>Sets the shim of FileDependencyList.FileDependencyList()</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.AddDefaultDependencies">
+            <summary>Sets the shim of FileDependencyList.AddDefaultDependencies()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.AddDependencyPathString">
+            <summary>Sets the shim of FileDependencyList.AddDependencyPath(String filePath)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.CheckForChanges">
+            <summary>Sets the shim of FileDependencyList.CheckForChanges()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.SaveStream">
+            <summary>Sets the shim of FileDependencyList.Save(Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.SaveString">
+            <summary>Sets the shim of FileDependencyList.Save(String file)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFileDependencyList.AllInstances.SaveTextWriter">
+            <summary>Sets the shim of FileDependencyList.Save(TextWriter writer)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.FontCompiler</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.#ctor(SharpDX.Toolkit.Graphics.FontCompiler)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.CompileAndSaveStringStringString">
+            <summary>Sets the shim of FontCompiler.CompileAndSave(String sourceXmlFile, String outputFile, String dependencyFile)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.CompileFontDescription">
+            <summary>Sets the shim of FontCompiler.Compile(FontDescription fontDescription)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.CompileFontDescriptionStream">
+            <summary>Sets the shim of FontCompiler.Compile(FontDescription fontDescription, Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.Constructor">
+            <summary>Sets the shim of FontCompiler.FontCompiler()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.MakeSpriteFontFontDescriptionStream">
+            <summary>Sets the shim of FontCompiler.MakeSpriteFont(FontDescription options, Stream stream)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFontCompiler.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.FontDescription</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.#ctor(SharpDX.Toolkit.Graphics.FontDescription)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.Constructor">
+            <summary>Sets the shim of FontDescription.FontDescription()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.LoadStream">
+            <summary>Sets the shim of FontDescription.Load(Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.LoadString">
+            <summary>Sets the shim of FontDescription.Load(String fileName)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.SaveStream">
+            <summary>Sets the shim of FontDescription.Save(Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.SaveString">
+            <summary>Sets the shim of FontDescription.Save(String fileName)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.StaticConstructor">
+            <summary>Sets the shim of FontDescription.FontDescription()</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.AllInstances.SaveStream">
+            <summary>Sets the shim of FontDescription.Save(Stream stream)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimFontDescription.AllInstances.SaveString">
+            <summary>Sets the shim of FontDescription.Save(String fileName)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.ModelCompiler</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.#ctor(SharpDX.Toolkit.Graphics.ModelCompiler)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CheckTextureFormatString">
+            <summary>Sets the shim of ModelCompiler.CheckTextureFormat(String format)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CollectEmbeddedTexturesTextureArray">
+            <summary>Sets the shim of ModelCompiler.CollectEmbeddedTextures(Texture[] textures)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CollectMeshNodesNode">
+            <summary>Sets the shim of ModelCompiler.CollectMeshNodes(Node node)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CollectNodesNodeModelDataBone">
+            <summary>Sets the shim of ModelCompiler.CollectNodes(Node node, Bone targetParent)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CollectSkinnedBones">
+            <summary>Sets the shim of ModelCompiler.CollectSkinnedBones()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CompileAndSaveStringStringModelCompilerOptions">
+            <summary>Sets the shim of ModelCompiler.CompileAndSave(String fileName, String outputFile, ModelCompilerOptions compilerOptions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CompileFromFileStringModelCompilerOptions">
+            <summary>Sets the shim of ModelCompiler.CompileFromFile(String fileName, ModelCompilerOptions compilerOptions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CompileFromStreamStreamStringModelCompilerOptions">
+            <summary>Sets the shim of ModelCompiler.CompileFromStream(Stream modelStream, String fileName, ModelCompilerOptions compilerOptions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.CompileStreamStringModelCompilerOptions">
+            <summary>Sets the shim of ModelCompiler.Compile(Stream modelStream, String fileName, ModelCompilerOptions compilerOptions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.Constructor">
+            <summary>Sets the shim of ModelCompiler.ModelCompiler()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ConvertColorColor4D">
+            <summary>Sets the shim of ModelCompiler.ConvertColor(Color4D value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ConvertMatrixMatrix4x4">
+            <summary>Sets the shim of ModelCompiler.ConvertMatrix(Matrix4x4 sourceMatrix)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ConvertVectorVector2D">
+            <summary>Sets the shim of ModelCompiler.ConvertVector(Vector2D value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ConvertVectorVector3D">
+            <summary>Sets the shim of ModelCompiler.ConvertVector(Vector3D value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ConvertWrapModeTextureWrapMode">
+            <summary>Sets the shim of ModelCompiler.ConvertWrapMode(TextureWrapMode wrapMode)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.IsModelNodeNode">
+            <summary>Sets the shim of ModelCompiler.IsModelNode(Node node)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ProcessMaterial">
+            <summary>Sets the shim of ModelCompiler.Process(Material rawMaterial)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ProcessMaterials">
+            <summary>Sets the shim of ModelCompiler.ProcessMaterials()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ProcessModelDataMeshMesh">
+            <summary>Sets the shim of ModelCompiler.Process(Mesh mesh, Mesh assimpMesh)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.ProcessScene">
+            <summary>Sets the shim of ModelCompiler.ProcessScene()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.RegisterNodeNodeDictionaryOfNodeInt32">
+            <summary>Sets the shim of ModelCompiler.RegisterNode(Node node, Dictionary`2&lt;Node,Int32&gt; nodeMap)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.StaticConstructor">
+            <summary>Sets the shim of ModelCompiler.ModelCompiler()</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CheckTextureFormatString">
+            <summary>Sets the shim of ModelCompiler.CheckTextureFormat(String format)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CollectEmbeddedTexturesTextureArray">
+            <summary>Sets the shim of ModelCompiler.CollectEmbeddedTextures(Texture[] textures)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CollectMeshNodesNode">
+            <summary>Sets the shim of ModelCompiler.CollectMeshNodes(Node node)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CollectNodesNodeModelDataBone">
+            <summary>Sets the shim of ModelCompiler.CollectNodes(Node node, Bone targetParent)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CollectSkinnedBones">
+            <summary>Sets the shim of ModelCompiler.CollectSkinnedBones()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.CompileFromStreamStreamStringModelCompilerOptions">
+            <summary>Sets the shim of ModelCompiler.CompileFromStream(Stream modelStream, String fileName, ModelCompilerOptions compilerOptions)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.ConvertWrapModeTextureWrapMode">
+            <summary>Sets the shim of ModelCompiler.ConvertWrapMode(TextureWrapMode wrapMode)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.IsModelNodeNode">
+            <summary>Sets the shim of ModelCompiler.IsModelNode(Node node)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.ProcessMaterial">
+            <summary>Sets the shim of ModelCompiler.Process(Material rawMaterial)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.ProcessMaterials">
+            <summary>Sets the shim of ModelCompiler.ProcessMaterials()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.ProcessModelDataMeshMesh">
+            <summary>Sets the shim of ModelCompiler.Process(Mesh mesh, Mesh assimpMesh)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.ProcessScene">
+            <summary>Sets the shim of ModelCompiler.ProcessScene()</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompiler.AllInstances.RegisterNodeNodeDictionaryOfNodeInt32">
+            <summary>Sets the shim of ModelCompiler.RegisterNode(Node node, Dictionary`2&lt;Node,Int32&gt; nodeMap)</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions">
+            <summary>Shim type of SharpDX.Toolkit.Graphics.ModelCompilerOptions</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.#ctor(SharpDX.Toolkit.Graphics.ModelCompilerOptions)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.Constructor">
+            <summary>Sets the shim of ModelCompilerOptions.ModelCompilerOptions()</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.ShimModelCompilerOptions.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.CharacterRegionTypeConverter</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>Sets the stub of CharacterRegionTypeConverter.CanConvertFrom(ITypeDescriptorContext context, Type sourceType)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CanConvertFromITypeDescriptorContextType">
+            <summary>Sets the stub of CharacterRegionTypeConverter.CanConvertFrom(ITypeDescriptorContext context, Type sourceType)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>Sets the stub of TypeConverter.CanConvertTo(ITypeDescriptorContext context, Type destinationType)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CanConvertToITypeDescriptorContextType">
+            <summary>Sets the stub of TypeConverter.CanConvertTo(ITypeDescriptorContext context, Type destinationType)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CreateInstance(System.ComponentModel.ITypeDescriptorContext,System.Collections.IDictionary)">
+            <summary>Sets the stub of TypeConverter.CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CreateInstanceITypeDescriptorContextIDictionary">
+            <summary>Sets the stub of TypeConverter.CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetCreateInstanceSupported(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>Sets the stub of TypeConverter.GetCreateInstanceSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetCreateInstanceSupportedITypeDescriptorContext">
+            <summary>Sets the stub of TypeConverter.GetCreateInstanceSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetProperties(System.ComponentModel.ITypeDescriptorContext,System.Object,System.Attribute[])">
+            <summary>Sets the stub of TypeConverter.GetProperties(ITypeDescriptorContext context, Object value, Attribute[] attributes)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetPropertiesITypeDescriptorContextObjectAttributeArray">
+            <summary>Sets the stub of TypeConverter.GetProperties(ITypeDescriptorContext context, Object value, Attribute[] attributes)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>Sets the stub of TypeConverter.GetPropertiesSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetPropertiesSupportedITypeDescriptorContext">
+            <summary>Sets the stub of TypeConverter.GetPropertiesSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>Sets the stub of TypeConverter.GetStandardValues(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>Sets the stub of TypeConverter.GetStandardValuesExclusive(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValuesExclusiveITypeDescriptorContext">
+            <summary>Sets the stub of TypeConverter.GetStandardValuesExclusive(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValuesITypeDescriptorContext">
+            <summary>Sets the stub of TypeConverter.GetStandardValues(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>Sets the stub of TypeConverter.GetStandardValuesSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.GetStandardValuesSupportedITypeDescriptorContext">
+            <summary>Sets the stub of TypeConverter.GetStandardValuesSupported(ITypeDescriptorContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.InitializeStub">
+            <summary>Initializes a new instance of type StubCharacterRegionTypeConverter</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.IsValid(System.ComponentModel.ITypeDescriptorContext,System.Object)">
+            <summary>Sets the stub of TypeConverter.IsValid(ITypeDescriptorContext context, Object value)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.IsValidITypeDescriptorContextObject">
+            <summary>Sets the stub of TypeConverter.IsValid(ITypeDescriptorContext context, Object value)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubCharacterRegionTypeConverter.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.EffectCompiler</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler.InitializeStub">
+            <summary>Initializes a new instance of type StubEffectCompiler</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectCompiler.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.EffectDataCodeWriter</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter.InitializeStub">
+            <summary>Initializes a new instance of type StubEffectDataCodeWriter</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubEffectDataCodeWriter.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.FileDependencyList</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Sets the stub of Dictionary`2.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Sets the stub of Dictionary`2.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.InitializeStub">
+            <summary>Initializes a new instance of type StubFileDependencyList</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.OnDeserialization(System.Object)">
+            <summary>Sets the stub of Dictionary`2.OnDeserialization(Object sender)</summary>
+        </member>
+        <member name="F:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.OnDeserializationObject">
+            <summary>Sets the stub of Dictionary`2.OnDeserialization(Object sender)</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFileDependencyList.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.FontCompiler</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler.InitializeStub">
+            <summary>Initializes a new instance of type StubFontCompiler</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontCompiler.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.FontDescription</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription.InitializeStub">
+            <summary>Initializes a new instance of type StubFontDescription</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubFontDescription.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions">
+            <summary>Stub type of SharpDX.Toolkit.Graphics.ModelCompilerOptions</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions.InitializeStub">
+            <summary>Initializes a new instance of type StubModelCompilerOptions</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:SharpDX.Toolkit.Graphics.Fakes.StubModelCompilerOptions.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+    </members>
+</doc>
