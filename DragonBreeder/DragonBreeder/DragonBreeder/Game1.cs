@@ -42,14 +42,17 @@ namespace DragonBreeder
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        GraphicsProcessor proc;
+        StaticModel testModel;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1280/2;
+            graphics.PreferredBackBufferHeight = 720/2;
             Content.RootDirectory = "Content";
             Window.Title = "DragonBreeder";
         }
-
+        Camera camera;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -69,9 +72,15 @@ namespace DragonBreeder
         /// </summary>
         protected override void LoadContent()
         {
+            StaticModel.ContentManager = Content;
+            
             // Create a new SpriteBatch, which can be used to draw textures.
+            proc = new GraphicsProcessor(graphics, Content, 1280/2, 720/2);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            testModel = new StaticModel("testScene");
+            proc.LoadContent();
+            proc.Add(testModel);
+            camera = proc.Camera;
             // TODO: use this.Content to load your game content here
         }
 
@@ -83,7 +92,8 @@ namespace DragonBreeder
         {
             // TODO: Unload any non ContentManager content here
         }
-
+        Vector2 angle = new Vector2();
+        Vector3 dirUnit = new Vector3(0, 0, 1);
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -93,22 +103,69 @@ namespace DragonBreeder
         {
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
+            Vector3 CamPos = camera.Position;
+            float camspeed = 0.2f;
+            float lightspeed = 0.05f;
+            //Vector3 LightPos = light.lightPosition;
+            MouseState mouseState = Mouse.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Escape))
+                this.Exit();
+            this.IsMouseVisible = true;
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                this.IsMouseVisible = false;
+                angle.X += (Window.ClientBounds.Center.X / 2 - mouseState.X) * 0.1f;
+                angle.Y -= (Window.ClientBounds.Center.Y / 2 - mouseState.Y) * 0.1f;
+                if ((Window.ClientBounds.Center.Y / 2 - mouseState.Y) != 0 || (Window.ClientBounds.Center.X / 2 - mouseState.X) != 0)
+                {
+                    dirUnit.X = MathHelper.ToRadians(angle.X);
+                    dirUnit = new Vector3(0, 0, 1);
+                    dirUnit = Vector3.Transform(dirUnit, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(angle.X), MathHelper.ToRadians(-angle.Y), 0));
+                    dirUnit *= camspeed;
+                }
+            }
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                CamPos += dirUnit;
+                //  CamPos.Z += dirUnit.Z;
+            }
+            if (keyboardState.IsKeyDown(Keys.W))
+            {
+                CamPos -= dirUnit;
+                // CamPos.Z -= dirUnit.Z;
+            }
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                CamPos -= Vector3.Cross(Vector3.UnitY, dirUnit);
+                //  CamPos.Z += dirUnit.Z;
+            }
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                CamPos += Vector3.Cross(Vector3.UnitY, dirUnit);
+                // CamPos.Z -= dirUnit.Z;
+            }
 
-            // TODO: Add your update logic here
-
+            if (mouseState.LeftButton == ButtonState.Pressed)
+                Mouse.SetPosition(Window.ClientBounds.Center.X / 2, Window.ClientBounds.Center.Y / 2);
+            camera.LookAt = CamPos - dirUnit * 30;
+            camera.Position = CamPos;
             base.Update(gameTime);
         }
-
+        RenderTarget2D temp;
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
+            temp = proc.G_BufferDraw();
+            GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
-
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin(BlendState.Opaque);
+            spriteBatch.Draw(temp, new Rectangle(0, 0, 1280 / 2, 720 / 2), Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

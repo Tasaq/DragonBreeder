@@ -23,11 +23,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JBBRXG11ContentPipeline, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\..\..\..\..\..\Downloads\jbbrxg11-24761\JBBRXG11\JBBRXG11-V0.9.50.02-Library\JBBRXG11ContentPipeline\obj\x86\System.__ComObject\JBBRXG11ContentPipeline.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Downloads\jbbrxg11-24761\JBBRXG11\JBBRXG11-V0.9.50.02-Library\JBBRXG11ContentPipeline\bin\x86\Debug\JBBRXG11ContentPipeline.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.XImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.AudioImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="SlimDX">
+      <HintPath>..\..\..\..\..\..\Downloads\jbbrxg11-24761\JBBRXG11\JBBRXG11-V0.9.50.02-Library\JBBRXG11ContentPipeline\bin\x86\Debug\SlimDX.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="StaticModel.fx">
+      <Name>StaticModel</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="testScene.FBX">
+      <Name>testScene</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ComputeTangents>True</ProcessorParameters_ComputeTangents>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
