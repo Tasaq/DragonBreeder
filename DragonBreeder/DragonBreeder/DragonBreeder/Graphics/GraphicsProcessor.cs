@@ -54,28 +54,36 @@ namespace DragonBreeder
         List<IModelEntity> models = new List<IModelEntity>();
         List<ILight> lights = new List<ILight>();
 
-
+        QuadRender quad;
+        Effect lighting;
+        Effect combine;
         public GraphicsProcessor(GraphicsDeviceManager device, ContentManager manager,int width, int height)
         {
             Camera = new Camera();
-
+            Camera.FarPlane = 100.0f;
+            Camera.NearPlane = 0.1f;
             this.GraphicsDevice = device.GraphicsDevice;
             this.ContentManager = manager;
             g_depth = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Single, DepthFormat.Depth24);
             g_normal = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Rg32, DepthFormat.Depth24);
             g_color = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            lightBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.HdrBlendable, DepthFormat.Depth24);
-            resultingBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.HdrBlendable, DepthFormat.Depth24);
-
+            lightBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            resultingBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            quad = new QuadRender(GraphicsDevice);
             
         }
         public void LoadContent()
         {
-
+            lighting = ContentManager.Load<Effect>("lighting");
+            combine = ContentManager.Load<Effect>("combine");
         }
         public void Add(IModelEntity model)
         {
             models.Add(model);
+        }
+        public void Add(ILight light)
+        {
+            lights.Add(light);
         }
         public RenderTarget2D G_BufferDraw()
         {
@@ -94,7 +102,38 @@ namespace DragonBreeder
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
-            return g_color;
+            return g_normal;
+        }
+        public RenderTarget2D LightBufferDraw()
+        {
+            GraphicsDevice.SetRenderTarget(0, lightBuffer);
+            GraphicsDevice.Clear(0, Color.Gray);
+            Matrix VP = Camera.ViewMatrix * Camera.ProjectionMatrix;
+            lighting.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
+            //Directional
+            lighting.CurrentTechnique = lighting.Techniques["PointLight"];
+            foreach (ILight light in lights)
+            {
+                lighting.Parameters["DepthMap"].SetValue(g_depth);
+                lighting.Parameters["NormalMap"].SetValue(g_normal);
+                lighting.Parameters["LightPosition"].SetValue(light.Position);
+                lighting.Parameters["Color"].SetValue(light.Color);
+                lighting.Parameters["LightDistance"].SetValue(light.Distance);
+                lighting.Parameters["Camera"].SetValue(Camera.Position);
+                quad.RenderQuad(lighting);
+
+            }
+            return lightBuffer;
+        }
+        public RenderTarget2D CombineLightingAndAlbedo()
+        {
+            GraphicsDevice.SetRenderTarget(0, resultingBuffer);
+            GraphicsDevice.Clear(0, Color.Gray);
+            combine.CurrentTechnique = combine.Techniques["PointLight"];
+            combine.Parameters["LightMap"].SetValue(lightBuffer);
+            combine.Parameters["ColorMap"].SetValue(g_color);
+            quad.RenderQuad(combine);
+            return resultingBuffer;
         }
     }
 }

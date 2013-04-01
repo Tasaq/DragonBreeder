@@ -66,7 +66,7 @@ namespace DragonBreeder
             foreach (ModelMesh mesh in model.Meshes)
             {
                 effect.Parameters["World"].SetValue(mesh.localTransform*World);
-                effect.Parameters["Color"].SetValue(mesh.Color.ToVector3());
+                effect.Parameters["Color"].SetValue(mesh.Material.color);
 
                 mesh.Effects[0].Begin();
                 mesh.Effects[0].CurrentTechnique.Passes[0].Begin();

@@ -44,11 +44,12 @@ namespace DragonBreeder
         SpriteBatch spriteBatch;
         GraphicsProcessor proc;
         StaticModel testModel;
+        PointLight light = new PointLight();
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280/2;
-            graphics.PreferredBackBufferHeight = 720/2;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
             Window.Title = "DragonBreeder";
         }
@@ -75,11 +76,15 @@ namespace DragonBreeder
             StaticModel.ContentManager = Content;
             
             // Create a new SpriteBatch, which can be used to draw textures.
-            proc = new GraphicsProcessor(graphics, Content, 1280/2, 720/2);
+            proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testModel = new StaticModel("testScene");
             proc.LoadContent();
             proc.Add(testModel);
+            light.Position = new Vector3(0, 1, 0);
+            light.Color = new Vector3(1, 1, 1);
+            light.Distance = 10000.0f;
+            proc.Add(light);
             camera = proc.Camera;
             // TODO: use this.Content to load your game content here
         }
@@ -104,7 +109,7 @@ namespace DragonBreeder
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
             Vector3 CamPos = camera.Position;
-            float camspeed = 0.2f;
+            float camspeed = 0.02f;
             float lightspeed = 0.05f;
             //Vector3 LightPos = light.lightPosition;
             MouseState mouseState = Mouse.GetState();
@@ -160,11 +165,13 @@ namespace DragonBreeder
         protected override void Draw(GameTime gameTime)
         {
 
-            temp = proc.G_BufferDraw();
+            proc.G_BufferDraw();
+            proc.LightBufferDraw();
+            temp = proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
             spriteBatch.Begin(BlendState.Opaque);
-            spriteBatch.Draw(temp, new Rectangle(0, 0, 1280 / 2, 720 / 2), Color.White);
+            spriteBatch.Draw(temp, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

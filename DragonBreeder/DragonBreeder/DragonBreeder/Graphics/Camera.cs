@@ -120,6 +120,12 @@ namespace DragonBreeder
             {
                 return nearPlane;
             }
+            set
+            {
+                nearPlane = value;
+                projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), width / height, nearPlane, farPlane);
+                frustrum = new BoundingFrustum(viewMatrix * projectionMatrix);
+            }
         }
         private Vector3 tiltNormal;
         private float width = 1280;
@@ -158,13 +164,13 @@ namespace DragonBreeder
         /// </summary>
         public Camera()
         {
-            nearPlane = 0.1f;
+            nearPlane =1;
             position = Vector3.Zero;
             lookAt = Vector3.Forward;
             fov = 45;
             ShutterSpeed = 1;
             tiltNormal = Vector3.Up;
-            farPlane = 100;
+            farPlane = 50.0f;
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), 16.0f/9.0f, .1f, farPlane);
             viewMatrix = Matrix.CreateLookAt(position, lookAt, tiltNormal);
             frustrum = new BoundingFrustum(viewMatrix * projectionMatrix);

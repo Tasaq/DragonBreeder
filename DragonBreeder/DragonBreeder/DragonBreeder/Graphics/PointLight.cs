@@ -37,9 +37,45 @@ namespace DragonBreeder
 {
     class PointLight : ILight
     {
-        Vector3 Position { get; set; }
-        Vector3 Color { get; set; }
-        float Distance { get; set; }
+        Vector3 position;
+        Vector3 color;
+        float distance;
+
+        public Vector3 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+
+        public Vector3 Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                color = value;
+            }
+        }
+
+        public float Distance
+        {
+            get
+            {
+                return distance;
+            }
+            set
+            {
+                distance = value;
+            }
+        }
         public PointLight()
         {
             Position = new Vector3();
