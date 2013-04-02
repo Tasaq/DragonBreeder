@@ -1,0 +1,23 @@
+<animation>
+<Frames>100</Frames>
+	<animationClip>
+		<name>piramidus</name>
+		<startFrame>0</startFrame>
+		<endFrame>31</endFrame>
+	</animationClip>
+	<animationClip>
+		<name>idle</name>
+		<startFrame>0</startFrame>
+		<endFrame>30</endFrame>
+	</animationClip>
+	<animationClip>
+		<name>run</name>
+		<startFrame>32</startFrame>
+		<endFrame>63</endFrame>
+	</animationClip>
+	<animationClip>
+		<name>strike</name>
+		<startFrame>64</startFrame>
+		<endFrame>90</endFrame>
+	</animationClip>
+</animation>

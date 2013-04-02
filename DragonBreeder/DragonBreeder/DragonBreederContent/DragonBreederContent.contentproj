@@ -50,8 +50,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lighting.fx">
-      <Name>Lighting</Name>
+    <Compile Include="PointLight.fx">
+      <Name>PointLight</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
@@ -62,6 +62,35 @@
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DirectionalLight.fx">
+      <Name>DirectionalLight</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimatedModel.fx">
+      <Name>AnimatedModel</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="piramidus.FBX">
+      <Name>piramidus</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.008</ProcessorParameters_ResizeScale>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="piramidus.xml">
+      <Name>piramidus</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

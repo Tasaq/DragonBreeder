@@ -33,24 +33,23 @@ using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using Microsoft.Xna.Framework.Content;
-using DragonBreeder.Graphics;
 
-namespace DragonBreeder
+namespace DragonBreeder.Graphics
 {
-    class StaticModel : GrahicObject, IModelEntity
+    class AnimatedModel : GrahicObject, IModelEntity
     {
         Model model;
         public Matrix World { get; set; }
         public Matrix ViewProjection { get; set; }
         static Effect effect;
-       // static public ContentManager ContentManager { get; set; }
+        //static public ContentManager ContentManager { get; set; }
         string technique;
-        public StaticModel(string name)
+        public AnimatedModel(string name)
         {
             technique = "Render";
             model = ContentManager.Load<Model>(name);
             World = Matrix.CreateTranslation(0,0,0);
-            effect = ContentManager.Load<Effect>("StaticModel");
+            effect = ContentManager.Load<Effect>("AnimatedModel");
             
             foreach (ModelMesh mesh in model.Meshes)
             {
@@ -60,7 +59,6 @@ namespace DragonBreeder
                     mesh.Technique = "RenderTextureNoBlend";
                 foreach (var part in mesh.MeshParts)
                 {
-                    
                     part.Effect = effect;
                 }
             }
@@ -107,6 +105,14 @@ namespace DragonBreeder
                     return mesh;
             }
             return null;
+        }
+        public void startAnimation(string animation)
+        {
+            model.StartClip(animation, Matrix.Identity);
+        }
+        public void Update(GameTime time, bool repeat)
+        {
+            model.UpdateAnimation(time, repeat);
         }
     }
 }

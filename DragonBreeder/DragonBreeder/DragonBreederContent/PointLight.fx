@@ -26,7 +26,7 @@ struct VS_OUT
 };
 
 #define kPI 3.1415926536f
-VS_OUT VS( VS_IN input)
+VS_OUT VSfullScreen( VS_IN input)
 {
     VS_OUT  Out;
 	Out.position = float4(input.Position.xyz,1);
@@ -35,17 +35,23 @@ VS_OUT VS( VS_IN input)
 	Out.texcoord.y = (1-input.Position.y)*0.5f;
 	return Out;
 }
+VS_OUT VS( VS_IN input)
+{
+    VS_OUT  Out;
+	Out.texcoord.x = (1+input.Position.x)*0.5f;
+	Out.texcoord.y = (1-input.Position.y)*0.5f;
+	Out.position = mul(input.Position, WorldViewProjection);
+
+	return Out;
+}
+
 half3 decode (half3 enc)
 {
-    half scale = 1.7777;
-    half3 nn =
-        enc.xyz*half3(2*scale,2*scale,0) +
-        half3(-scale,-scale,1);
-    half g = 2.0 / dot(nn.xyz,nn.xyz);
-    half3 n;
-    n.xy = g*nn.xy;
-    n.z = g-1;
-    return n;
+    half2 ang = enc*2-1;
+    half2 scth;
+    sincos(ang.x * kPI, scth.x, scth.y);
+    half2 scphi = half2(sqrt(1.0 - ang.y*ang.y), ang.y);
+    return half3(scth.y*scphi.x, scth.x*scphi.x, scphi.y);
 }
 float3 DepthToPosition(float2 TexCoord, float d, float4x4 InvertViewProjection)
 {
@@ -81,8 +87,7 @@ float4 Phong(float3 LightDirection, float3 position, float3 Normal, float specul
 float4 PS( VS_OUT input ) : SV_TARGET
 {
 	float4 result = 0;
-	float2 TexCoord = input.texcoord;
-	//return float4(TexCoord,0,1);
+	float2 TexCoord = input.position.xy/float2(1280,720);
 	float d = DepthMap.Sample(TexSampler, TexCoord);
 	if(d<=0)
 	{
@@ -96,12 +101,17 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	 return result;
 }
 
-
+DepthStencilState DisableDepth
+{
+    DepthEnable = FALSE;
+    DepthWriteMask = ALL;
+};
 
 technique11 PointLight
 {
     pass P0
     {
+		 SetDepthStencilState( DisableDepth, 0 );
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
         SetHullShader( NULL );
         SetDomainShader( NULL );

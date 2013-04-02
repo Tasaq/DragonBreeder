@@ -1,3 +1,5 @@
+#define MaxBones 59
+float4x4 Bones[MaxBones];
 float4x4 World;
 float4x4 ViewProjection;
 float4 Color;
@@ -12,6 +14,8 @@ SamplerState TexSampler
 struct VS_IN
 {
     float4 Position: POSITION;
+	    uint4 BoneIndices	: BLENDINDICES;
+    float4 BoneWeights	: BLENDWEIGHTS;
 	float3 Normal  : NORMAL;
     uint Pos	   : SV_VertexID ;
 };
@@ -19,6 +23,8 @@ struct VS_INtexture
 {
     float4 Position: POSITION;
 	float3 Normal  : NORMAL;
+	    uint4 BoneIndices	: BLENDINDICES;
+    float4 BoneWeights	: BLENDWEIGHTS;
 	float2 TexCoord  : TEXTURECOORD;
     uint Pos	   : SV_VertexID ;
 };
@@ -45,19 +51,35 @@ struct PS_OUT
 
 VS_OUT VS( VS_IN input )
 {
-    VS_OUT output;
-    output.Pos = mul(input.Position, mul(World,ViewProjection));
-    output.Position = mul(input.Position, mul(World,ViewProjection));
-	output.Normal = normalize(mul(input.Normal, World));
+    VS_OUT output;	
+	float4x4 skinTransform = 0;
+    skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
+    skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
+    skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
+    skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
+
+    skinTransform = mul(skinTransform, World);
+
+    output.Pos = mul(input.Position, mul(skinTransform, ViewProjection));
+    output.Position = mul(input.Position, mul(skinTransform,ViewProjection));
+	output.Normal = normalize(mul(input.Normal, skinTransform));
     return output;
 }
 
 VS_OUT_texture VS_textured( VS_INtexture input )
 {
     VS_OUT_texture output;
-    output.Pos = mul(input.Position, mul(World,ViewProjection));
-    output.Position = mul(input.Position, mul(World,ViewProjection));
-	output.Normal = normalize(mul(input.Normal, World));
+	float4x4 skinTransform = 0;
+    skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
+    skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
+    skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
+    skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
+
+    skinTransform = mul(skinTransform, World);
+
+    output.Pos = mul(input.Position, mul(skinTransform, ViewProjection));
+    output.Position = mul(input.Position, mul(skinTransform,ViewProjection));
+	output.Normal = normalize(mul(input.Normal, skinTransform));
 	output.TexCoord = input.TexCoord;
     return output;
 }

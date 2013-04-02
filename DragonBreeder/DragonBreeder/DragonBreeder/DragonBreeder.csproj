@@ -76,7 +76,9 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\AnimatedModel.cs" />
     <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\Class1.cs" />
     <Compile Include="Graphics\GraphicsProcessor.cs" />
     <Compile Include="Graphics\ILight.cs" />
     <Compile Include="Graphics\IMaterial.cs" />

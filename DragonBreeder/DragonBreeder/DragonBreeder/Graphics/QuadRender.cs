@@ -53,10 +53,23 @@ namespace DragonBreeder
 
             ib = new short[] { 0, 1, 2, 2, 3, 0 };
             vdecl = new VertexDeclaration(VertexPositionTexture.VertexDeclaration.GetVertexElements());
-        }             
+        }
 
         public void RenderQuad(Effect effect)
         {
+            GraphicsDevice.VertexDeclaration = vdecl;
+            effect.Begin();
+            effect.CurrentTechnique.Passes[0].Begin();
+            //GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleListWithAdjacency, vertices, 0, vertices.Length / 4);
+            GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertices, 0, 4, ib, 0, 2);
+            effect.CurrentTechnique.Passes[0].End();
+            effect.End();
+        }
+        public void RenderQuad(Vector3 Position, float distance, Camera camera, Effect effect)
+        {
+            var billboardWorld = Matrix.Invert(camera.ViewMatrix);
+            billboardWorld.Translation = Position;
+            effect.Parameters["WorldViewProjection"].SetValue(billboardWorld * camera.ViewMatrix * camera.ProjectionMatrix);
 
             GraphicsDevice.VertexDeclaration = vdecl;
             effect.Begin();

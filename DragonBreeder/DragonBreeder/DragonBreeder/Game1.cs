@@ -32,6 +32,7 @@ using VertexElementUsage = Microsoft.Xna.Framework.Graphics.VertexElementUsage;
 using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
+using DragonBreeder.Graphics;
 
 namespace DragonBreeder
 {
@@ -44,6 +45,7 @@ namespace DragonBreeder
         SpriteBatch spriteBatch;
         GraphicsProcessor proc;
         StaticModel testModel;
+        AnimatedModel testAnimation;
         PointLight light = new PointLight();
         public Game1()
         {
@@ -73,18 +75,23 @@ namespace DragonBreeder
         /// </summary>
         protected override void LoadContent()
         {
-            StaticModel.ContentManager = Content;
+            GrahicObject.ContentManager = Content;
             
             // Create a new SpriteBatch, which can be used to draw textures.
             proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testModel = new StaticModel("testScene");
+            testAnimation = new AnimatedModel("piramidus");
+            testAnimation.World =  Matrix.CreateTranslation(0, 0.2f, 0);
+            testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
+            testAnimation.startAnimation("run");
             proc.LoadContent();
             proc.Add(testModel);
-            light.Position = new Vector3(0, 1, 0);
+            light.Position = new Vector3(0, 0.1f, 0);
             light.Color = new Vector3(1, 1, 1);
-            light.Distance = 10000.0f;
+            light.Distance = 10.0f;
             proc.Add(light);
+            proc.Add(testAnimation);
             camera = proc.Camera;
             // TODO: use this.Content to load your game content here
         }
@@ -155,6 +162,7 @@ namespace DragonBreeder
                 Mouse.SetPosition(Window.ClientBounds.Center.X / 2, Window.ClientBounds.Center.Y / 2);
             camera.LookAt = CamPos - dirUnit * 30;
             camera.Position = CamPos;
+            testAnimation.Update(gameTime, true);
             base.Update(gameTime);
         }
         RenderTarget2D temp;
@@ -170,6 +178,7 @@ namespace DragonBreeder
             temp = proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
+            
             spriteBatch.Begin(BlendState.Opaque);
             spriteBatch.Draw(temp, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.End();

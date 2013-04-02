@@ -34,6 +34,7 @@ using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using Microsoft.Xna.Framework.Content;
 
+
 namespace DragonBreeder
 {
     class GraphicsProcessor
@@ -65,7 +66,7 @@ namespace DragonBreeder
             this.GraphicsDevice = device.GraphicsDevice;
             this.ContentManager = manager;
             g_depth = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Single, DepthFormat.Depth24);
-            g_normal = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Rg32, DepthFormat.Depth24);
+            g_normal = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth24);
             g_color = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             lightBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             resultingBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
@@ -74,7 +75,7 @@ namespace DragonBreeder
         }
         public void LoadContent()
         {
-            lighting = ContentManager.Load<Effect>("lighting");
+            lighting = ContentManager.Load<Effect>("DirectionalLight");
             combine = ContentManager.Load<Effect>("combine");
         }
         public void Add(IModelEntity model)
@@ -104,10 +105,18 @@ namespace DragonBreeder
             GraphicsDevice.SetRenderTarget(2, null);
             return g_normal;
         }
+        private Vector2 toScreenSpace(Vector3 vec, Matrix VP)
+        {
+            Vector4 position = new Vector4(vec, 1);
+            Vector4 result = Vector4.Transform(position, VP);
+            result /= result.W;
+            return new Vector2(result.X, result.Y);
+        }
         public RenderTarget2D LightBufferDraw()
         {
             GraphicsDevice.SetRenderTarget(0, lightBuffer);
             GraphicsDevice.Clear(0, Color.Gray);
+            
             Matrix VP = Camera.ViewMatrix * Camera.ProjectionMatrix;
             lighting.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
             //Directional
@@ -121,7 +130,7 @@ namespace DragonBreeder
                 lighting.Parameters["LightDistance"].SetValue(light.Distance);
                 lighting.Parameters["Camera"].SetValue(Camera.Position);
                 quad.RenderQuad(lighting);
-
+             //   quad.RenderQuad(light.Position, light.Distance, Camera, lighting);
             }
             return lightBuffer;
         }
