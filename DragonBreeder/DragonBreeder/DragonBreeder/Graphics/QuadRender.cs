@@ -32,6 +32,7 @@ using VertexElementUsage = Microsoft.Xna.Framework.Graphics.VertexElementUsage;
 using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
+using Microsoft.Xna.Framework;
 
 namespace DragonBreeder
 {
@@ -78,6 +79,67 @@ namespace DragonBreeder
             GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertices, 0, 4, ib, 0, 2);
             effect.CurrentTechnique.Passes[0].End();
             effect.End();
+        }
+
+    }
+    public class Quad
+    {
+        private GraphicsDevice GraphicsDevice;
+        JBBRXG11.VertexDeclaration vdecl;
+        VertexPositionNormalTexture[] vertices;
+        private short[] ib = null;
+        public Quad(GraphicsDevice device)
+        {
+
+            GraphicsDevice = device;
+            vertices = new VertexPositionNormalTexture[] {
+                                                   new VertexPositionNormalTexture(new Vector3( 1f, -1f,  0f),new Vector3(0, 0,  -1), new Vector2(1, 1)),
+                                                   new VertexPositionNormalTexture(new Vector3(-1f, -1f,  0f),new Vector3(0, 0,  -1), new Vector2(0, 1)),
+         //                                          new VertexPositionNormalTexture(new Vector3(-1f,  1f,  0f),new Vector3(0, 0,  -1), new Vector2(0, 0)),
+                                                   new VertexPositionNormalTexture(new Vector3( 1f,  1f,  0f),new Vector3(0, 0,  -1), new Vector2(1, 0)) };
+
+            ib = new short[] { 0, 1, 2, 2, 3, 0 };
+            vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+        }
+        public Quad(GraphicsDevice device, Matrix Transform)
+        {
+            Vector3[] Vertices = new Vector3[4]
+            {
+                new Vector3( 1f, -1f,  0f),
+                new Vector3(-1f, -1f,  0f),
+                new Vector3(-1f,  1f,  0f),
+                new Vector3( 1f,  1f,  0f)
+            };
+            Vector3[] Normals = new Vector3[4]
+            {
+                new Vector3(0, 0,  -1),
+                new Vector3(0, 0,  -1),
+                new Vector3(0, 0,  -1),
+                new Vector3(0, 0,  -1)
+            };
+            for (int i = 0; i < 4; i++)
+            {
+                Vertices[i] = Vector3.Transform(Vertices[i], Transform);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Normals[i] = Vector3.Transform(Normals[i], Transform);
+            }
+            GraphicsDevice = device;
+            vertices = new VertexPositionNormalTexture[] {
+                                                   new VertexPositionNormalTexture(Vertices[0],Normals[0], new Vector2(1, 1)),
+                                                   new VertexPositionNormalTexture(Vertices[1],Normals[1], new Vector2(0, 1)),
+                                                   new VertexPositionNormalTexture(Vertices[2],Normals[2], new Vector2(0, 0)),
+                                                   new VertexPositionNormalTexture(Vertices[3],Normals[3], new Vector2(1, 0)) };
+
+            ib = new short[] { 0, 1, 2, 2, 3, 0 };
+            vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+        }
+        public void RenderQuad()
+        {
+            GraphicsDevice.VertexDeclaration = vdecl;
+            //GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleListWithAdjacency, vertices, 0, vertices.Length / 4);
+            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith3ControlPoints, vertices, 0, 1);
         }
     }
 }

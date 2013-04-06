@@ -92,6 +92,7 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	result.rgb/=1.2f;
 	//result.rgb *= 0.1+saturate(shadowfact.rgb);
 	//result.a = min(length(shadowfact.rgb)*result.a, result.a);
+	//return float4(normal, 0);
 	return result;
 }
 

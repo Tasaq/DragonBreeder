@@ -46,6 +46,8 @@ namespace DragonBreeder
         GraphicsProcessor proc;
         StaticModel testModel;
         AnimatedModel testAnimation;
+        TerrainModel terrain;
+        TerrainMaterial materialTerrain;
         PointLight light = new PointLight();
         public Game1()
         {
@@ -82,17 +84,26 @@ namespace DragonBreeder
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testModel = new StaticModel("testScene");
             testAnimation = new AnimatedModel("piramidus");
+            //instancedModel = new TerrainModel("redBox");
             testAnimation.World =  Matrix.CreateTranslation(0, 0.2f, 0);
             testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
+            
             testAnimation.startAnimation("run");
             proc.LoadContent();
-            proc.Add(testModel);
+           // proc.Add(testModel);
             light.Position = new Vector3(0, 0.1f, 0);
             light.Color = new Vector3(1, 1, 1);
             light.Distance = 10.0f;
             proc.Add(light);
             proc.Add(testAnimation);
             camera = proc.Camera;
+
+
+            materialTerrain = new TerrainMaterial(Color.LightBlue);
+            materialTerrain.displacementMap = Content.Load<Texture2D>("heightMap");
+            terrain = new TerrainModel(new Quad(GraphicsDevice), materialTerrain);
+            terrain.World = Matrix.CreateRotationX(MathHelper.PiOver2);
+            proc.Add(terrain);
             // TODO: use this.Content to load your game content here
         }
 
@@ -124,7 +135,7 @@ namespace DragonBreeder
             if (keyboardState.IsKeyDown(Keys.Escape))
                 this.Exit();
             this.IsMouseVisible = true;
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.RightButton == ButtonState.Pressed)
             {
                 this.IsMouseVisible = false;
                 angle.X += (Window.ClientBounds.Center.X / 2 - mouseState.X) * 0.1f;
@@ -158,7 +169,7 @@ namespace DragonBreeder
                 // CamPos.Z -= dirUnit.Z;
             }
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
+            if (mouseState.RightButton == ButtonState.Pressed)
                 Mouse.SetPosition(Window.ClientBounds.Center.X / 2, Window.ClientBounds.Center.Y / 2);
             camera.LookAt = CamPos - dirUnit * 30;
             camera.Position = CamPos;
@@ -173,9 +184,11 @@ namespace DragonBreeder
         protected override void Draw(GameTime gameTime)
         {
 
-            proc.G_BufferDraw();
+            GraphicsDevice.setWireframeView();
+            temp = proc.G_BufferDraw();
+            GraphicsDevice.setNormalView();
             proc.LightBufferDraw();
-            temp = proc.CombineLightingAndAlbedo();
+             proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
             

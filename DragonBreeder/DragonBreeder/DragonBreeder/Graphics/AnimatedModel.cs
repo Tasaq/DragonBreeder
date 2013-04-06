@@ -50,7 +50,6 @@ namespace DragonBreeder.Graphics
             model = ContentManager.Load<Model>(name);
             World = Matrix.CreateTranslation(0,0,0);
             effect = ContentManager.Load<Effect>("AnimatedModel");
-            
             foreach (ModelMesh mesh in model.Meshes)
             {
                 if (mesh.Material.texture == null)

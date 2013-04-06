@@ -14,7 +14,7 @@ SamplerState TexSampler
 struct VS_IN
 {
     float4 Position: POSITION;
-	    uint4 BoneIndices	: BLENDINDICES;
+	 uint4 BoneIndices	: BLENDINDICES;
     float4 BoneWeights	: BLENDWEIGHTS;
 	float3 Normal  : NORMAL;
     uint Pos	   : SV_VertexID ;

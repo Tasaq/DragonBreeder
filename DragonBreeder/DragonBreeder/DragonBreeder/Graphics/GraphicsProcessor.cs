@@ -33,6 +33,7 @@ using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using Microsoft.Xna.Framework.Content;
+using DragonBreeder.Graphics;
 
 
 namespace DragonBreeder
@@ -88,6 +89,7 @@ namespace DragonBreeder
         }
         public RenderTarget2D G_BufferDraw()
         {
+            
             Matrix VP = Camera.ViewMatrix * Camera.ProjectionMatrix;
             GraphicsDevice.SetRenderTarget(0, g_depth);
             GraphicsDevice.SetRenderTarget(1, g_normal);
@@ -103,7 +105,7 @@ namespace DragonBreeder
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
-            return g_normal;
+            return g_color;
         }
         private Vector2 toScreenSpace(Vector3 vec, Matrix VP)
         {
