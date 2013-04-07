@@ -35,16 +35,30 @@ using MathHelper = Microsoft.Xna.Framework.MathHelper;
 
 namespace DragonBreeder.Graphics
 {
+    class Texture2Drgba
+    {
+        public Texture2D[] Textures;
+        public Texture2D R { get { return Textures[0]; } set { Textures[0] = value; } }
+        public Texture2D G { get { return Textures[1]; } set { Textures[1] = value; } }
+        public Texture2D B { get { return Textures[2]; } set { Textures[2] = value; } }
+        public Texture2D A { get { return Textures[3]; } set { Textures[3] = value; } }
+        public Texture2D Base { get { return Textures[4]; } set { Textures[4] = value; } }
+        public Texture2Drgba()
+        {
+            Textures = new Texture2D[5];
+        }
+    }
     struct TerrainMaterial
     {
         public Texture2D displacementMap;
         public Texture2D normalMap;
         public Texture2D layersMap;
-        public Texture2D[] Textures;
+        public Texture2Drgba Textures;
         public float tesselationFactor;
         public float LOD;
         public float scale;
         public Vector3 Color;
+        
         public TerrainMaterial(Color color)
         {
             displacementMap = null;
@@ -62,6 +76,7 @@ namespace DragonBreeder.Graphics
     {
         int count = 2;
         Quad quad;
+        int Dimmensions=3;
         public Matrix World { get; set; }
         public Matrix View { get; set; }
         public Matrix Projection { get; set; }
@@ -71,6 +86,7 @@ namespace DragonBreeder.Graphics
         TerrainMaterial Material { get; set; }
         public TerrainModel(Quad quad)
         {
+            Dimmensions = 3;
             this.quad = quad;
             technique = "Render";
 
@@ -80,6 +96,8 @@ namespace DragonBreeder.Graphics
         public TerrainModel(Quad quad, TerrainMaterial material)
         {
             this.quad = quad;
+
+             Dimmensions = 3;
             this.Material = material;
             technique = "Render";
             if (material.Textures != null)
@@ -95,21 +113,24 @@ namespace DragonBreeder.Graphics
         }
         public void Draw()
         {
-            effect.Parameters["World"].SetValue(World);
-            effect.Parameters["ViewProjection"].SetValue(ViewProjection);
-            effect.Parameters["WorldViewProjection"].SetValue(World*ViewProjection);
-            effect.CurrentTechnique = effect.Techniques[technique];
-            effect.Parameters["Color"].SetValue(Material.Color);
-            effect.Parameters["DisplacementMap"].SetValue(Material.displacementMap);
             if (Material.Textures != null)
             {
-                //  effect.Parameters["ModelTexture"].SetValue(mesh.Material.texture);
+                effect.Parameters["LayersMap"].SetValue(Material.layersMap);
+                effect.Parameters["Textures"].SetValue(Material.Textures.Textures);
             }
 
-
+            effect.CurrentTechnique = effect.Techniques[technique];
             effect.Begin();
             effect.CurrentTechnique.Passes[0].Begin();
-            quad.RenderQuad();
+            effect.Parameters["World"].SetValue(World);
+
+            effect.Parameters["quadID_MAX"].SetValue(Dimmensions * Dimmensions);
+            effect.Parameters["ViewProjection"].SetValue(ViewProjection);
+            effect.Parameters["WorldViewProjection"].SetValue(World * ViewProjection);
+            effect.Parameters["Color"].SetValue(Material.Color);
+            effect.Parameters["DisplacementMap"].SetValue(Material.displacementMap);
+
+                quad.RenderQuad();
             effect.CurrentTechnique.Passes[0].End();
             effect.End();
         }
@@ -119,9 +140,11 @@ namespace DragonBreeder.Graphics
             effect.Parameters["ViewProjection"].SetValue(ViewProjection);
             effect.CurrentTechnique = effect.Techniques[technique];
             effect.Parameters["Color"].SetValue(Material.Color);
+            effect.Parameters["DisplacementMap"].SetValue(Material.displacementMap);
             if (Material.Textures != null)
             {
-                //  effect.Parameters["ModelTexture"].SetValue(mesh.Material.texture);
+                effect.Parameters["LayersMap"].SetValue(Material.layersMap);
+                effect.Parameters["Textures"].SetValue(Material.Textures.Textures);
             }
 
 

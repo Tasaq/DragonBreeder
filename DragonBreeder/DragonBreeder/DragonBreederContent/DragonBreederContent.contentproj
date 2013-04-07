@@ -112,6 +112,74 @@
       <Processor>JBBRXG11Texture2DContentProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="kafle.jpg">
+      <Name>kafle</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="large_grass.jpg">
+      <Name>large_grass</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="road.jpg">
+      <Name>road</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="sand02.jpg">
+      <Name>sand02</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="blendMap.jpg">
+      <Name>blendMap</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hillyGrass.jpg">
+      <Name>hillyGrass</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="snowHill.jpg">
+      <Name>snowHill</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="grassRock.jpg">
+      <Name>grassRock</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bmpTestFile.bmp">
+      <Name>bmpTestFile</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_PremultiplyAlpha>False</ProcessorParameters_PremultiplyAlpha>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

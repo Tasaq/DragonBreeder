@@ -91,7 +91,7 @@ namespace DragonBreeder
             testAnimation.startAnimation("run");
             proc.LoadContent();
            // proc.Add(testModel);
-            light.Position = new Vector3(0, 0.1f, 0);
+            light.Position = new Vector3(1, 2, 1);
             light.Color = new Vector3(1, 1, 1);
             light.Distance = 10.0f;
             proc.Add(light);
@@ -101,8 +101,17 @@ namespace DragonBreeder
 
             materialTerrain = new TerrainMaterial(Color.LightBlue);
             materialTerrain.displacementMap = Content.Load<Texture2D>("heightMap");
-            terrain = new TerrainModel(new Quad(GraphicsDevice), materialTerrain);
-            terrain.World = Matrix.CreateRotationX(MathHelper.PiOver2);
+            materialTerrain.layersMap = Content.Load<Texture2D>("blendMap");
+            materialTerrain.Textures = new Texture2Drgba();
+            materialTerrain.Textures.Base = Content.Load<Texture2D>("large_grass");
+            materialTerrain.Textures.R = Content.Load<Texture2D>("bmpTestFile");
+            materialTerrain.Textures.G = Content.Load<Texture2D>("grassRock");
+            materialTerrain.Textures.B = Content.Load<Texture2D>("snowHill");
+            materialTerrain.Textures.A = Content.Load<Texture2D>("sand02");
+
+
+            terrain = new TerrainModel(new Quad(GraphicsDevice, 5), materialTerrain);
+            terrain.World = Matrix.CreateScale(10,10,0)* Matrix.CreateRotationX(MathHelper.PiOver2);
             proc.Add(terrain);
             // TODO: use this.Content to load your game content here
         }
@@ -184,11 +193,11 @@ namespace DragonBreeder
         protected override void Draw(GameTime gameTime)
         {
 
-            GraphicsDevice.setWireframeView();
-            temp = proc.G_BufferDraw();
-            GraphicsDevice.setNormalView();
+           // GraphicsDevice.setWireframeView();
+            proc.G_BufferDraw();
+           // GraphicsDevice.setNormalView();
             proc.LightBufferDraw();
-             proc.CombineLightingAndAlbedo();
+            temp =  proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
             

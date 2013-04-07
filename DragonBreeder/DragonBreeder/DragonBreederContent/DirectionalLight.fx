@@ -61,8 +61,7 @@ float4 Phong(float3 LightDirection, float3 position, float3 Normal)
 	float NdL = saturate(dot(LightDirection, Normal));
 	float3 H = normalize(normalize(Camera - position) + LightDirection);
 	float NdH =  pow( saturate( dot( H, Normal ) ), 60.0f );
-	float4 result = saturate(1 -  (distance(position, LightPosition) / LightDistance));
-	result *= LightIntensity*float4(NdL * Color.rgb, NdH);
+	float4 result = LightIntensity*float4(NdL * Color.rgb, NdH);
 	return result;
 }
 float4 Phong(float3 LightDirection, float3 position, float3 Normal, float specularExp, float specularInt)
@@ -70,8 +69,7 @@ float4 Phong(float3 LightDirection, float3 position, float3 Normal, float specul
 	float NdL = saturate(dot(LightDirection, Normal));
 	float3 H = normalize(normalize(Camera - position) + LightDirection);
 	float NdH =  specularInt*pow( saturate( dot( H, Normal ) ), 24*specularExp );
-	float4 result = saturate(1 - (distance(position, LightPosition) / LightDistance));
-	result *= LightIntensity*float4(NdL * Color.rgb, NdH);
+	float4 result = LightIntensity*float4(NdL * Color.rgb, NdH);
 	return result;
 }
 float4 PS( VS_OUT input ) : SV_TARGET
@@ -80,7 +78,7 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	     // TODO: add your pixel shader code here.
 	float2 TexCoord = input.texcoord;
 	float d = DepthMap.Sample(TexSampler, TexCoord);
-	if(d.r <=0)
+	if(d.r <= 0)
 	{
 		return float4(0.2,0.3,0.4,0);
 	}
@@ -88,11 +86,9 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	float3 normal = decode(float3(NormalMap.Sample(TexSampler, TexCoord).rg,1));
 	float3 direction = normalize(LightPosition);
 	float4 result = Phong(direction, position.xyz, normal);
-	result.rgb += 0.2f;
-	result.rgb/=1.2f;
 	//result.rgb *= 0.1+saturate(shadowfact.rgb);
 	//result.a = min(length(shadowfact.rgb)*result.a, result.a);
-	//return float4(normal, 0);
+	//return float4(result, 0);
 	return result;
 }
 

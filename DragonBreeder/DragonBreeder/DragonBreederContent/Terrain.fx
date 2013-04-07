@@ -3,53 +3,53 @@ float4x4 ViewProjection;
 float4x4 WorldViewProjection;
 float4 Color;
 Texture2D DisplacementMap;
-float scale = 0.5f;
+Texture2D LayersMap;
+Texture2D Textures[5];
+float scale =5.1f;
+float2 quadID;
+int quadID_MAX;
 SamplerState TexSampler
 {
-    Filter = MIN_MAG_MIP_POINT;
+    Filter = MIN_MAG_MIP_LINEAR;
 	AddressU = Wrap;
 	AddressV = Wrap;
-
 };
 struct HS_PATCH_DATA
 {
-	float edges[3]	: SV_TessFactor;
-	float inside	: SV_InsideTessFactor;
-	float center[3] : CENTER;
+	float edges[4] : SV_TessFactor;
+	float inside[2] : SV_InsideTessFactor;
 };
 struct HS_CONTROL_POINT
 {
-	float3	pos1		: POSITION1;
-	float3	pos2		: POSITION2;
-	float3	pos3		: POSITION3;
-	float3	norm1		: NORMAL0;
-	float3	norm2		: NORMAL1;
-	float2	TexCoord	: TEXCOORD0;
+	float4 pos		: POSITION0;
+	float3 norm		: NORMAL0;
+	float4 TexCoord : TEXCOORD0;
 };
 
 struct VS_IN
 {
-    float4 Position  : POSITION0;
-	float3 Normal	 : NORMAL;
-	float2 TexCoord  : TEXCOORD;
+    float4 Position : POSITION0;
+	float3 Normal : NORMAL0;
+	float4 TexCoord : TEXCOORD0;
 };
 struct VS_OUT
 {
-    float4 Position  : SV_POSITION;
-	float3 Normal	 : NORMAL;
-	float2 TexCoord  : TEXCOORD;
+    float4 Position : SV_POSITION;
+	float3 Normal : NORMAL;
+	float2 TexCoord : TEXCOORD;
+	float4 pos : TEXCOORD1;
 };
 struct PS_OUT
 {
-    float4 Depth	: SV_Target0;		//Position
-    float4 Normal	: SV_Target1;
-	float4 Color	: SV_Target2;
+    float4 Depth : SV_Target0; //Position
+    float4 Normal : SV_Target1;
+	float4 Color : SV_Target2;
 };
 struct DS_OUTPUT
 {
-    float4 Position	: POSITION;
-	float3 Normal	: NORMAL;
-	float2 TexCoord	: TEXCOORD;
+    float4 Position : POSITION;
+	float3 Normal : NORMAL;
+	float4 TexCoord : TEXCOORD;
 };
 
 
@@ -57,102 +57,100 @@ VS_IN VS( VS_IN input )
 {
     return input;
 }
-float edgeLOD(float3 p1, float3 p2)
-{
-	return dot(p1, p2);
-}
-void getTessFact(inout HS_PATCH_DATA patch, OutputPatch<HS_CONTROL_POINT, 3> controlPoints, uint tid : SV_InstanceID)
-{
-	int next = (1 << tid) & 3;
-	patch.edges[tid] = 2;//0.1f+edgeLOD((float3) controlPoints[tid].pos1,(float3) controlPoints[next].pos1);
-	return;
-} 
 
-[domain("tri")]
-[outputtopology("triangle_cw")]
-[outputcontrolpoints(3)]
-[partitioning("fractional_odd")]
+[domain("quad")]
+[outputtopology("triangle_ccw")]
+[outputcontrolpoints(4)]
+[partitioning("pow2")]
 [patchconstantfunc("HS_PatchConstant")]
-HS_CONTROL_POINT HS_ControlPointPhase(InputPatch<VS_IN, 3> inputPatch,
+HS_CONTROL_POINT HS_ControlPointPhase(InputPatch<VS_IN, 4> inputPatch,
 									  uint tid : SV_OutputControlPointID,
 									  uint pid : SV_PrimitiveID)
 {
 	HS_CONTROL_POINT output;
-	
-	int next = (tid+1)%3;
-
-	float3 p1 = inputPatch[tid].Position;	
-	float3 p2 = inputPatch[next].Position;
-		
-	float3 n1 = inputPatch[tid].Normal;	
-	float3 n2 = inputPatch[next].Normal;
-
-	output.pos1 = p1;
-	output.pos2 = (2 * p1+p2 - dot(p2-p1, n1) * n1);
-	output.pos3 = (2 * p2+p1 - dot(p1-p2, n2) * n2);
-
-	float3 v12 = 4 * dot(p2-p1, n1+n2) / dot(p2-p1, p2-p1);
-	output.norm1 = n1;
-	output.norm2 = n1+n2 - v12*(p2 - p1);
-
-	output.TexCoord = inputPatch[tid].TexCoord;
+	output.pos = inputPatch[tid].Position;
+	output.norm = inputPatch[tid].Normal;
+	output.TexCoord = (inputPatch[tid].Position+1)*0.5f;
 	return output;
 }
-[domain("tri")]
-HS_PATCH_DATA HS_PatchConstant(OutputPatch<HS_CONTROL_POINT, 3> controlPoints)
+
+[domain("quad")]
+HS_PATCH_DATA HS_PatchConstant(OutputPatch<HS_CONTROL_POINT, 4> controlPoints)
 {
 	HS_PATCH_DATA patch = (HS_PATCH_DATA)1;
-	
-	getTessFact(patch, controlPoints, 0);
-	getTessFact(patch, controlPoints, 1);
-	getTessFact(patch, controlPoints, 2);
-	patch.inside = max(max(patch.edges[0], patch.edges[1]), patch.edges[2]);
-
-	float3 Center =   (controlPoints[0].pos2 + controlPoints[0].pos3) * 0.5 -
-					  controlPoints[0].pos1 + 
-					  (controlPoints[1].pos2 + controlPoints[1].pos3) * 0.5 -
-					  controlPoints[1].pos1 + 
-					  (controlPoints[2].pos2 + controlPoints[2].pos3) * 0.5 -
-					  controlPoints[2].pos1;
-	patch.center = (float[3])Center;
+	patch.edges[0]  = 64;
+	patch.edges[1]  = 64;
+	patch.edges[2]  = 64;
+	patch.edges[3]  = 64;
+	patch.inside[0] = 64;
+	patch.inside[1] = 64;//max(max(patch.edges[0], patch.edges[1]), patch.edges[2]);
 	return patch;
-}				
-[domain("tri")]		
-DS_OUTPUT DS_PNtriangles(HS_PATCH_DATA patchData, const OutputPatch<HS_CONTROL_POINT, 3> input, float3 uvw : SV_DOMAINLOCATION)
+}
+float heightMapSizeX=512.0f;
+float3 normalFromTexture(float2 texCoord)
+{
+		float3 norm = float3(0,1,0);
+		float me =length(DisplacementMap.SampleLevel(TexSampler,texCoord,0));
+		float n = length(DisplacementMap.SampleLevel(TexSampler,float2(texCoord.x,texCoord.y+1.0/heightMapSizeX),0));
+		float s = length(DisplacementMap.SampleLevel(TexSampler,float2(texCoord.x,texCoord.y-1.0/heightMapSizeX),0));
+		float e = length(DisplacementMap.SampleLevel(TexSampler,float2(texCoord.x+1.0/heightMapSizeX,texCoord.y),0));
+		float w = length(DisplacementMap.SampleLevel(TexSampler,float2(texCoord.x-1.0/heightMapSizeX,texCoord.y),0));                
+
+	//find perpendicular vector to norm:        
+	float3 temp = norm; //a temporary vector that is not parallel to norm
+	if(norm.x==1)
+		temp.y+=0.5;
+	else
+		temp.x+=0.5;
+
+	//form a basis with norm being one of the axes:
+	float3 perp1 = normalize(cross(norm,temp));
+	float3 perp2 = normalize(cross(norm,perp1));
+
+	//use the basis to move the normal in its own space by the offset        
+	float3 normalOffset = 50*(((n-me)-(s-me))*perp1 + ((e-me)-(w-me))*perp2);
+	norm += normalOffset;
+	norm = normalize(norm);
+	return norm;
+}
+[domain("quad")]
+DS_OUTPUT DS_PNtriangles(HS_PATCH_DATA patchData, const OutputPatch<HS_CONTROL_POINT, 4> input, float2 uvw : SV_DOMAINLOCATION)
 {
 	DS_OUTPUT output;
 
 	float u = uvw.x;
 	float v = uvw.y;
-	float w = uvw.z;
 
-	float3 pos = (float3)input[0].pos1 * w*w*w + (float3)input[1].pos1 * u*u*u + (float3)input[2].pos1 * v*v*v +
-				 (float3)input[0].pos2 * w*w*u + (float3)input[0].pos3 * w*u*u + (float3)input[1].pos2 * u*u*v +
-				 (float3)input[1].pos3 * u*v*v + (float3)input[2].pos2 * v*v*w + (float3)input[2].pos3 * v*w*w +
-				 (float3)patchData.center*u*v*w;
-
-	float3 norm= input[0].norm1 * w*w + input[1].norm1 *u*u + input[2].norm1 * v*v +
-				 input[0].norm2 * w*u + input[1].norm2 *u*v + input[2].norm2 * v*w;
+    float4 topMidpoint = lerp(input[0].pos, input[1].pos, uvw.x);
+    float4 bottomMidpoint = lerp(input[3].pos, input[2].pos, uvw.x);
+    output.Position = float4(lerp(topMidpoint, bottomMidpoint, uvw.y));
 
 	
-    output.Position = mul(float4(uvw,1), WorldViewProjection);
-	output.Normal = normalize(mul(norm, World));
-	output.TexCoord = input[0].TexCoord *w+ input[1].TexCoord*v + input[2].TexCoord*u;
+    topMidpoint = lerp(input[0].TexCoord, input[1].TexCoord, uvw.x);
+    bottomMidpoint = lerp(input[3].TexCoord, input[2].TexCoord, uvw.x);
+    output.TexCoord = float4(lerp(topMidpoint, bottomMidpoint, uvw.y));
 
-	//output.Position.xyz += DisplacementMap.SampleLevel(TexSampler, output.TexCoord,0).rgb * scale * output.Normal;
+    output.Normal = normalize(normalFromTexture(output.TexCoord));
+	output.Position = mul(float4(output.Position.xyz,1), World);
+	output.Position.xyz += DisplacementMap.SampleLevel(TexSampler, output.TexCoord, 0).xyz*float3(0,1,0)*scale;
+
+
+
+	//output.Position = mul(output.Position, ViewProjection);
 	return output;
 
 }
 
-[maxvertexcount(3)]
+[maxvertexcount(4)]
 void GS( triangle DS_OUTPUT input[3], inout TriangleStream<VS_OUT> triStream )
 {
 	VS_OUT output;
 	for(uint i = 0; i < 3; i++)
 	{
-		output.Normal	= input[i].Normal;
-		output.Position = input[i].Position;
+		output.Normal = input[i].Normal;
 		output.TexCoord = input[i].TexCoord;
+		output.Position = mul(input[i].Position, ViewProjection);
+		output.pos = output.Position;
 		triStream.Append(output);
 	}
 	triStream.RestartStrip();
@@ -162,18 +160,40 @@ void GS( triangle DS_OUTPUT input[3], inout TriangleStream<VS_OUT> triStream )
 #define kPI 3.1415926536f
 half2 encode (float3 n)
 {
-    return half4(
+		return half4(
       (half2(atan2(n.y,n.x)/kPI, n.z)+1.0)*0.5,
       0,0);
 }
 PS_OUT PS( VS_OUT input ) : SV_TARGET
-{	
+{
 	PS_OUT output;
 	output.Normal = 0;
-	output.Depth =  input.Position.z/input.Position.w;
+	output.Depth = input.pos.z/input.pos.w;
 	output.Normal.rg = encode(input.Normal);
-	output.Color =  Color;
-    return output;
+	output.Color = float4(input.TexCoord.rg,0,1);
+	return output;
+}
+PS_OUT PS_Textured( VS_OUT input ) : SV_TARGET
+{
+
+	PS_OUT output;
+	output.Normal = 0;
+	output.Color = 0;
+	output.Depth = input.pos.z/input.pos.w;
+	output.Normal.rg = encode(input.Normal);
+	float3 a = LayersMap.Sample(TexSampler, input.TexCoord.rg).rgb;
+	float val =  length(DisplacementMap.Sample(TexSampler, (input.TexCoord.rg)).rgb);
+	float3 wsp = float3(0.001, 0.5, 0.7);
+	a.r = min((val > wsp.x) * (val-wsp.x)* (val-wsp.x) * 50,1);
+	a.g = min((val > wsp.y) * (val-wsp.y)* (val-wsp.y) * 10,1);
+	a.b = min((val > wsp.z) * (val-wsp.z)* (val-wsp.z) * 10,1);
+	input.TexCoord.rg *=50.0f;
+	output.Color.rgb =  Textures[4].Sample(TexSampler, (input.TexCoord.rg)).rgb;
+	output.Color.rgb = output.Color.rgb*(1-a.r) + a.r*Textures[0].Sample(TexSampler, (input.TexCoord.rg)).rgb;
+	output.Color.rgb = output.Color.rgb*(1-a.g) + a.g*Textures[1].Sample(TexSampler, (input.TexCoord.rg)).rgb;
+	output.Color.rgb = output.Color.rgb*(1-a.b) + a.b*Textures[2].Sample(TexSampler, (input.TexCoord.rg)).rgb;
+	//output.Color.rgb = input.Normal;
+	return output;
 }
 
 technique11 Render
@@ -181,10 +201,10 @@ technique11 Render
     pass P0
     {
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
-        SetHullShader( CompileShader(	hs_5_0, HS_ControlPointPhase() ) );
+        SetHullShader( CompileShader( hs_5_0, HS_ControlPointPhase() ) );
         SetDomainShader( CompileShader( ds_5_0, DS_PNtriangles() ) );
         SetGeometryShader(CompileShader(gs_5_0, GS() ));
-        SetPixelShader( CompileShader(	ps_5_0, PS() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS() ) );
     }
 }
 
@@ -193,9 +213,9 @@ technique11 RenderTextured
     pass P0
     {
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
-        SetHullShader( CompileShader(	hs_5_0, HS_ControlPointPhase() ) );
+        SetHullShader( CompileShader( hs_5_0, HS_ControlPointPhase() ) );
         SetDomainShader( CompileShader( ds_5_0, DS_PNtriangles() ) );
         SetGeometryShader(CompileShader(gs_5_0, GS() ));
-        SetPixelShader( CompileShader(	ps_5_0, PS() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS_Textured() ) );
     }
 }

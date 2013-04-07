@@ -105,7 +105,7 @@ namespace DragonBreeder
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
-            return g_color;
+            return g_depth;
         }
         private Vector2 toScreenSpace(Vector3 vec, Matrix VP)
         {

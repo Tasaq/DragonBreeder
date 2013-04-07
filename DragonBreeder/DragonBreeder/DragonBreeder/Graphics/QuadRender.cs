@@ -87,7 +87,8 @@ namespace DragonBreeder
         private GraphicsDevice GraphicsDevice;
         JBBRXG11.VertexDeclaration vdecl;
         VertexPositionNormalTexture[] vertices;
-        private short[] ib = null;
+        private int[] ib = null;
+        int primitiveCount;
         public Quad(GraphicsDevice device)
         {
 
@@ -95,51 +96,56 @@ namespace DragonBreeder
             vertices = new VertexPositionNormalTexture[] {
                                                    new VertexPositionNormalTexture(new Vector3( 1f, -1f,  0f),new Vector3(0, 0,  -1), new Vector2(1, 1)),
                                                    new VertexPositionNormalTexture(new Vector3(-1f, -1f,  0f),new Vector3(0, 0,  -1), new Vector2(0, 1)),
-         //                                          new VertexPositionNormalTexture(new Vector3(-1f,  1f,  0f),new Vector3(0, 0,  -1), new Vector2(0, 0)),
+                                                   new VertexPositionNormalTexture(new Vector3(-1f,  1f,  0f),new Vector3(0, 0,  -1), new Vector2(0, 0)),
                                                    new VertexPositionNormalTexture(new Vector3( 1f,  1f,  0f),new Vector3(0, 0,  -1), new Vector2(1, 0)) };
-
-            ib = new short[] { 0, 1, 2, 2, 3, 0 };
+            primitiveCount = 2;
+            ib = new int[] { 0, 1, 2, 2, 3, 0 };
             vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
         }
-        public Quad(GraphicsDevice device, Matrix Transform)
+        public Quad(GraphicsDevice device, int Count)
         {
-            Vector3[] Vertices = new Vector3[4]
-            {
-                new Vector3( 1f, -1f,  0f),
-                new Vector3(-1f, -1f,  0f),
-                new Vector3(-1f,  1f,  0f),
-                new Vector3( 1f,  1f,  0f)
-            };
-            Vector3[] Normals = new Vector3[4]
-            {
-                new Vector3(0, 0,  -1),
-                new Vector3(0, 0,  -1),
-                new Vector3(0, 0,  -1),
-                new Vector3(0, 0,  -1)
-            };
-            for (int i = 0; i < 4; i++)
-            {
-                Vertices[i] = Vector3.Transform(Vertices[i], Transform);
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                Normals[i] = Vector3.Transform(Normals[i], Transform);
-            }
+            primitiveCount = Count * Count;
+            Count += 1;
             GraphicsDevice = device;
-            vertices = new VertexPositionNormalTexture[] {
-                                                   new VertexPositionNormalTexture(Vertices[0],Normals[0], new Vector2(1, 1)),
-                                                   new VertexPositionNormalTexture(Vertices[1],Normals[1], new Vector2(0, 1)),
-                                                   new VertexPositionNormalTexture(Vertices[2],Normals[2], new Vector2(0, 0)),
-                                                   new VertexPositionNormalTexture(Vertices[3],Normals[3], new Vector2(1, 0)) };
+            Vector3[] Vertices = new Vector3[Count * Count];
+            Vector3[] Normals = new Vector3[Count * Count];
+            Vector2[] TexCoords = new Vector2[Count * Count];
+            int[,] ind = new int[Count, Count];
+            vertices = new VertexPositionNormalTexture[Count * Count];
+            int ctr = 0;
+            for (int i = 0; i < Count; i++)
+            {
+                for (int j = 0; j < Count; j++)
+                {
+                    ind[j,i] = ctr;
+                    vertices[ctr].Position = new Vector3((float)j / (float)(Count - 1), (float)i / (float)(Count - 1), 0.5f);
+                    vertices[ctr].Position = Vector3.Subtract( Vector3.Multiply( vertices[ctr].Position,2.0f), new Vector3(1.0f));
+                    vertices[ctr].Normal = new Vector3(0, 0, -1);
+                    vertices[ctr].TextureCoordinate = new Vector2((float)j / (float)(Count - 1), (float)i / (float)(Count - 1));
+                    vertices[ctr].TextureCoordinate =new Vector2(1,1);
+                    ctr++;
+                }
+            }
+            ib = new int[(Count ) * (Count) *4];
+            int counter = 0;
+            for (int j = 0; j < Count-1 ; j++)
+            {
+                for (int i = 0; i < Count-1; i++)
+                {
+                    ib[counter++] = ind[i, j];
+                    ib[counter++] = ind[i, j+1];
+                    ib[counter++] = ind[i + 1, j + 1];
+                    ib[counter++] = ind[i+1, j];
 
-            ib = new short[] { 0, 1, 2, 2, 3, 0 };
+                }
+            }
             vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
         }
         public void RenderQuad()
         {
             GraphicsDevice.VertexDeclaration = vdecl;
             //GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleListWithAdjacency, vertices, 0, vertices.Length / 4);
-            GraphicsDevice.DrawUserPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith3ControlPoints, vertices, 0, 1);
+            GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
         }
     }
 }
