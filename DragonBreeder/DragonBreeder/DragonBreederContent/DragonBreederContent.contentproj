@@ -45,7 +45,7 @@
       <Name>testScene</Name>
       <Importer>JBBRXG11FBXModelContentImporter</Importer>
       <Processor>JBBRXG11FBXModelContentProcessor</Processor>
-      <ProcessorParameters_ComputeTangents>True</ProcessorParameters_ComputeTangents>
+      <ProcessorParameters_ComputeTangents>False</ProcessorParameters_ComputeTangents>
       <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
     </Compile>
   </ItemGroup>
@@ -86,6 +86,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lowPolyTeaPot.FBX">
+      <Name>lowPolyTeaPot</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
     <None Include="piramidus.xml">
       <Name>piramidus</Name>
       <Importer>XmlImporter</Importer>
@@ -93,6 +99,12 @@
     </None>
     <Compile Include="redBox.FBX">
       <Name>redBox</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="sphereTest.FBX">
+      <Name>sphereTest</Name>
       <Importer>JBBRXG11FBXModelContentImporter</Importer>
       <Processor>JBBRXG11FBXModelContentProcessor</Processor>
       <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
@@ -110,6 +122,7 @@
       <Name>heightMap</Name>
       <Importer>JBBRXG11Texture2DContentImporter</Importer>
       <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +191,31 @@
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_PremultiplyAlpha>False</ProcessorParameters_PremultiplyAlpha>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="zakopane.jpg">
+      <Name>zakopane</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="StaticModelTS.fx">
+      <Name>StaticModelTS</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="randomDots.jpg">
+      <Name>randomDots</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_PremultiplyAlpha>False</ProcessorParameters_PremultiplyAlpha>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_ResizeToPowerOfTwo>False</ProcessorParameters_ResizeToPowerOfTwo>
+      <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

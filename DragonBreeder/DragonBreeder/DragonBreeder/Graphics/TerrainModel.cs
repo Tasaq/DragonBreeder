@@ -76,7 +76,8 @@ namespace DragonBreeder.Graphics
     {
         int count = 2;
         Quad quad;
-        int Dimmensions=3;
+        int Dimmensions = 3;
+        public Camera Camera { get; set; }
         public Matrix World { get; set; }
         public Matrix View { get; set; }
         public Matrix Projection { get; set; }
@@ -128,6 +129,7 @@ namespace DragonBreeder.Graphics
             effect.Parameters["ViewProjection"].SetValue(ViewProjection);
             effect.Parameters["WorldViewProjection"].SetValue(World * ViewProjection);
             effect.Parameters["Color"].SetValue(Material.Color);
+            effect.Parameters["CameraPosition"].SetValue(Camera.Position);
             effect.Parameters["DisplacementMap"].SetValue(Material.displacementMap);
 
                 quad.RenderQuad();

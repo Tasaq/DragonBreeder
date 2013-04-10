@@ -44,7 +44,7 @@ namespace DragonBreeder
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GraphicsProcessor proc;
-        StaticModel testModel;
+        StaticModelTS testModel;
         AnimatedModel testAnimation;
         TerrainModel terrain;
         TerrainMaterial materialTerrain;
@@ -82,25 +82,27 @@ namespace DragonBreeder
             // Create a new SpriteBatch, which can be used to draw textures.
             proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            testModel = new StaticModel("testScene");
+            testModel = new StaticModelTS("sphereTest");
+            testModel.World = Matrix.CreateTranslation(0, 0, 0);
             testAnimation = new AnimatedModel("piramidus");
             //instancedModel = new TerrainModel("redBox");
-            testAnimation.World =  Matrix.CreateTranslation(0, 0.2f, 0);
+            testAnimation.World =  Matrix.CreateTranslation(0, 0.0f, 0);
             testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
-            
+            testModel.DispalcementMap = Content.Load<Texture2D>("randomDots");
             testAnimation.startAnimation("run");
             proc.LoadContent();
-           // proc.Add(testModel);
             light.Position = new Vector3(1, 2, 1);
             light.Color = new Vector3(1, 1, 1);
             light.Distance = 10.0f;
             proc.Add(light);
-            proc.Add(testAnimation);
+          //  proc.Add(testAnimation);
             camera = proc.Camera;
 
 
+            proc.Add(testModel);
+
             materialTerrain = new TerrainMaterial(Color.LightBlue);
-            materialTerrain.displacementMap = Content.Load<Texture2D>("heightMap");
+            materialTerrain.displacementMap = Content.Load<Texture2D>("zakopane");
             materialTerrain.layersMap = Content.Load<Texture2D>("blendMap");
             materialTerrain.Textures = new Texture2Drgba();
             materialTerrain.Textures.Base = Content.Load<Texture2D>("large_grass");
@@ -110,9 +112,10 @@ namespace DragonBreeder
             materialTerrain.Textures.A = Content.Load<Texture2D>("sand02");
 
 
-            terrain = new TerrainModel(new Quad(GraphicsDevice, 5), materialTerrain);
-            terrain.World = Matrix.CreateScale(10,10,0)* Matrix.CreateRotationX(MathHelper.PiOver2);
-            proc.Add(terrain);
+            terrain = new TerrainModel(new Quad(GraphicsDevice, 70), materialTerrain);
+            terrain.Camera = camera;
+            terrain.World = Matrix.CreateScale(20,20,2)* Matrix.CreateRotationX(MathHelper.PiOver2);
+         //   proc.Add(terrain);
             // TODO: use this.Content to load your game content here
         }
 
@@ -124,8 +127,10 @@ namespace DragonBreeder
         {
             // TODO: Unload any non ContentManager content here
         }
+        bool raise = true;
         Vector2 angle = new Vector2();
         Vector3 dirUnit = new Vector3(0, 0, 1);
+        float disp = 0.0f;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -133,6 +138,7 @@ namespace DragonBreeder
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
             Vector3 CamPos = camera.Position;
@@ -183,6 +189,26 @@ namespace DragonBreeder
             camera.LookAt = CamPos - dirUnit * 30;
             camera.Position = CamPos;
             testAnimation.Update(gameTime, true);
+            testModel.EyeDirection = Vector3.Normalize( -camera.LookAt + camera.Position);
+            if ((raise == true) && (disp <= 0.1f))
+            {
+                disp += 0.01f;
+                if (disp > 0.1f)
+                {
+                    raise = false;
+                }
+            }
+            if ((raise == false && disp >= -0.0f))
+            {
+                disp -= 0.01f;
+                if (disp < 0.0f)
+                {
+                    raise = true;
+                }
+            }
+            
+            testModel.DisplacementScale = disp;
+            
             base.Update(gameTime);
         }
         RenderTarget2D temp;
@@ -195,7 +221,7 @@ namespace DragonBreeder
 
            // GraphicsDevice.setWireframeView();
             proc.G_BufferDraw();
-           // GraphicsDevice.setNormalView();
+          //  GraphicsDevice.setNormalView();
             proc.LightBufferDraw();
             temp =  proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);

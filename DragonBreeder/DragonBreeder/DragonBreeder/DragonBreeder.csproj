@@ -83,6 +83,7 @@
     <Compile Include="Graphics\ILight.cs" />
     <Compile Include="Graphics\IMaterial.cs" />
     <Compile Include="Graphics\IModelEntity.cs" />
+    <Compile Include="Graphics\StaticModelTS.cs" />
     <Compile Include="Graphics\TerrainModel.cs" />
     <Compile Include="Graphics\PointLight.cs" />
     <Compile Include="Graphics\QuadRender.cs" />

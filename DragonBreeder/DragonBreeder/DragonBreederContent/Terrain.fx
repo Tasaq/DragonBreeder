@@ -7,6 +7,7 @@ Texture2D LayersMap;
 Texture2D Textures[5];
 float scale =5.1f;
 float2 quadID;
+float3 CameraPosition;
 int quadID_MAX;
 SamplerState TexSampler
 {
@@ -73,17 +74,37 @@ HS_CONTROL_POINT HS_ControlPointPhase(InputPatch<VS_IN, 4> inputPatch,
 	output.TexCoord = (inputPatch[tid].Position+1)*0.5f;
 	return output;
 }
+float2 rand_2_10(in float2 uv) {
+    float noiseX = (frac(sin(dot(uv, float2(12.9898,78.233) * 2.0)) * 43758.5453));
+    float noiseY = sqrt(1 - noiseX * noiseX);
+    return float2(noiseX, noiseY);
+}
 
 [domain("quad")]
 HS_PATCH_DATA HS_PatchConstant(OutputPatch<HS_CONTROL_POINT, 4> controlPoints)
 {
 	HS_PATCH_DATA patch = (HS_PATCH_DATA)1;
-	patch.edges[0]  = 64;
-	patch.edges[1]  = 64;
-	patch.edges[2]  = 64;
-	patch.edges[3]  = 64;
-	patch.inside[0] = 64;
-	patch.inside[1] = 64;//max(max(patch.edges[0], patch.edges[1]), patch.edges[2]);
+	float3 sum = controlPoints[0].pos.xyz+controlPoints[1].pos.xyz+controlPoints[2].pos.xyz+controlPoints[3].pos.xyz;
+	sum/=4;
+	float3 e1 = distance(CameraPosition, mul(float4(controlPoints[1].pos.xyz+controlPoints[2].pos.xyz,1)/2, World).xyz)*0.01f;
+	float3 e2 = distance(CameraPosition, mul(float4(controlPoints[2].pos.xyz+controlPoints[3].pos.xyz,1)/2, World).xyz)*0.01f;
+	float3 e3 = distance(CameraPosition, mul(float4(controlPoints[3].pos.xyz+controlPoints[0].pos.xyz,1)/2, World).xyz)*0.01f;
+	float3 e4 = distance(CameraPosition, mul(float4(controlPoints[0].pos.xyz+controlPoints[1].pos.xyz,1)/2, World).xyz)*0.01f;
+
+
+
+	float center = distance(CameraPosition.xz, mul(float4(sum,1), World).xz)*0.01f;
+	center =pow((1-center),20);
+	e1 =pow((1-e1),20);
+	e2 =pow((1-e2),20);
+	e3 =pow((1-e3),20);
+	e4 =pow((1-e4),20);
+	patch.edges[0]  =16;
+	patch.edges[1]  =16;
+	patch.edges[2]  =16;
+	patch.edges[3]  =16;
+	patch.inside[0] =64*center;
+	patch.inside[1] =64*center;//max(max(patch.edges[0], patch.edges[1]), patch.edges[2]);
 	return patch;
 }
 float heightMapSizeX=512.0f;
@@ -132,7 +153,7 @@ DS_OUTPUT DS_PNtriangles(HS_PATCH_DATA patchData, const OutputPatch<HS_CONTROL_P
 
     output.Normal = normalize(normalFromTexture(output.TexCoord));
 	output.Position = mul(float4(output.Position.xyz,1), World);
-	output.Position.xyz += DisplacementMap.SampleLevel(TexSampler, output.TexCoord, 0).xyz*float3(0,1,0)*scale;
+	output.Position.y += DisplacementMap.SampleLevel(TexSampler, output.TexCoord, 0).y*scale;
 
 
 
@@ -183,7 +204,9 @@ PS_OUT PS_Textured( VS_OUT input ) : SV_TARGET
 	output.Normal.rg = encode(input.Normal);
 	float3 a = LayersMap.Sample(TexSampler, input.TexCoord.rg).rgb;
 	float val =  length(DisplacementMap.Sample(TexSampler, (input.TexCoord.rg)).rgb);
-	float3 wsp = float3(0.001, 0.5, 0.7);
+	val += 1.0f - input.Normal.y;
+	val/=2.0f;
+	float3 wsp = float3(0.01, 0.3, 0.5);
 	a.r = min((val > wsp.x) * (val-wsp.x)* (val-wsp.x) * 50,1);
 	a.g = min((val > wsp.y) * (val-wsp.y)* (val-wsp.y) * 10,1);
 	a.b = min((val > wsp.z) * (val-wsp.z)* (val-wsp.z) * 10,1);
@@ -192,7 +215,6 @@ PS_OUT PS_Textured( VS_OUT input ) : SV_TARGET
 	output.Color.rgb = output.Color.rgb*(1-a.r) + a.r*Textures[0].Sample(TexSampler, (input.TexCoord.rg)).rgb;
 	output.Color.rgb = output.Color.rgb*(1-a.g) + a.g*Textures[1].Sample(TexSampler, (input.TexCoord.rg)).rgb;
 	output.Color.rgb = output.Color.rgb*(1-a.b) + a.b*Textures[2].Sample(TexSampler, (input.TexCoord.rg)).rgb;
-	//output.Color.rgb = input.Normal;
 	return output;
 }
 
