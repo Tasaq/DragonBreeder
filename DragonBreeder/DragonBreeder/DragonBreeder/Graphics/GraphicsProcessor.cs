@@ -55,9 +55,10 @@ namespace DragonBreeder
 
         List<IModelEntity> models = new List<IModelEntity>();
         List<ILight> lights = new List<ILight>();
-
+        LightPoints PointLights;
         QuadRender quad;
-        Effect lighting;
+        Effect DirectionalLight;
+        Effect PointLight;
         Effect combine;
         public GraphicsProcessor(GraphicsDeviceManager device, ContentManager manager,int width, int height)
         {
@@ -72,11 +73,12 @@ namespace DragonBreeder
             lightBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             resultingBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             quad = new QuadRender(GraphicsDevice);
-            
+            PointLights = new LightPoints(GraphicsDevice);
         }
         public void LoadContent()
         {
-            lighting = ContentManager.Load<Effect>("DirectionalLight");
+            DirectionalLight = ContentManager.Load<Effect>("DirectionalLight");
+            PointLight = ContentManager.Load<Effect>("PointLight");
             combine = ContentManager.Load<Effect>("combine");
         }
         public void Add(IModelEntity model)
@@ -85,7 +87,10 @@ namespace DragonBreeder
         }
         public void Add(ILight light)
         {
-            lights.Add(light);
+            if (!(light is PointLight))
+                lights.Add(light);
+            else
+                PointLights.Add(light as PointLight);
         }
         public RenderTarget2D G_BufferDraw()
         {
@@ -102,6 +107,7 @@ namespace DragonBreeder
                 Model.SetViewProjection(VP);
                 Model.Draw();
             }
+
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
@@ -118,22 +124,36 @@ namespace DragonBreeder
         {
             GraphicsDevice.SetRenderTarget(0, lightBuffer);
             GraphicsDevice.Clear(0, Color.Gray);
-            
             Matrix VP = Camera.ViewMatrix * Camera.ProjectionMatrix;
-            lighting.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
+            DirectionalLight.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
             //Directional
-            lighting.CurrentTechnique = lighting.Techniques["PointLight"];
+            DirectionalLight.CurrentTechnique = DirectionalLight.Techniques["PointLight"];
             foreach (ILight light in lights)
             {
-                lighting.Parameters["DepthMap"].SetValue(g_depth);
-                lighting.Parameters["NormalMap"].SetValue(g_normal);
-                lighting.Parameters["LightPosition"].SetValue(light.Position);
-                lighting.Parameters["Color"].SetValue(light.Color);
-                lighting.Parameters["LightDistance"].SetValue(light.Distance);
-                lighting.Parameters["Camera"].SetValue(Camera.Position);
-                quad.RenderQuad(lighting);
+                DirectionalLight.Parameters["DepthMap"].SetValue(g_depth);
+                DirectionalLight.Parameters["NormalMap"].SetValue(g_normal);
+                DirectionalLight.Parameters["LightPosition"].SetValue(light.Position);
+                DirectionalLight.Parameters["Color"].SetValue(light.Color);
+                DirectionalLight.Parameters["LightDistance"].SetValue(light.Distance);
+                DirectionalLight.Parameters["Camera"].SetValue(Camera.Position);
+                quad.RenderQuad(DirectionalLight);
              //   quad.RenderQuad(light.Position, light.Distance, Camera, lighting);
             }
+            PointLight.CurrentTechnique = PointLight.Techniques["PointLightGS"];
+            PointLight.Parameters["DepthMap"].SetValue(g_depth);
+            PointLight.Parameters["NormalMap"].SetValue(g_normal);
+            PointLight.Parameters["Camera"].SetValue(Camera.Position);
+            Console.WriteLine(Camera.ViewMatrix.Up);
+            PointLight.Parameters["CameraDirection"].SetValue(Vector3.Normalize(Camera.LookAt - Camera.Position) );
+            PointLight.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
+            PointLight.Parameters["ViewProjection"].SetValue(VP);
+            PointLight.Parameters["View"].SetValue(Camera.ViewMatrix);
+            PointLight.Parameters["Projection"].SetValue(Camera.ProjectionMatrix);
+            PointLight.Begin();
+            PointLight.CurrentTechnique.Passes[0].Begin();
+            PointLights.Draw();
+            PointLight.CurrentTechnique.Passes[0].End();
+            PointLight.End();
             return lightBuffer;
         }
         public RenderTarget2D CombineLightingAndAlbedo()

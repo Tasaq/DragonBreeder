@@ -5,7 +5,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DragonBreeder</RootNamespace>
     <AssemblyName>DragonBreeder</AssemblyName>
@@ -60,6 +60,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="JBBRXG11, Version=0.9.50.2, Culture=neutral, PublicKeyToken=6d1750a4e6c226dd, processorArchitecture=x86">
       <HintPath>..\..\..\..\..\..\Downloads\jbbrxg11-24761\JBBRXG11\JBBRXG11-V0.9.50.02-Library\JBBRXG11\bin\x86\Debug\JBBRXG11.dll</HintPath>
@@ -78,11 +81,13 @@
   <ItemGroup>
     <Compile Include="Graphics\AnimatedModel.cs" />
     <Compile Include="Graphics\Camera.cs" />
-    <Compile Include="Graphics\Class1.cs" />
+    <Compile Include="Graphics\GraphicObject.cs" />
+    <Compile Include="Graphics\DirectionalLight.cs" />
     <Compile Include="Graphics\GraphicsProcessor.cs" />
     <Compile Include="Graphics\ILight.cs" />
     <Compile Include="Graphics\IMaterial.cs" />
     <Compile Include="Graphics\IModelEntity.cs" />
+    <Compile Include="Graphics\Points.cs" />
     <Compile Include="Graphics\StaticModelTS.cs" />
     <Compile Include="Graphics\TerrainModel.cs" />
     <Compile Include="Graphics\PointLight.cs" />

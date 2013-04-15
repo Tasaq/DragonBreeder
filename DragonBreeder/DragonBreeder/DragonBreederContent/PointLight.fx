@@ -1,48 +1,89 @@
 float4x4 WorldViewProjection;
+float4x4 Projection;
+float4x4 View;
+float4x4 ViewProjection;
 float4x4 InvertViewProjection;
 float4x4 LightViewProjection;
-float3 LightPosition;
-float LightDistance;
+
 float LightIntensity = 1;
-float4 Color;
 float3 Camera;
 Texture2D NormalMap;
 Texture2D DepthMap;
 SamplerState TexSampler
 {
     Filter = MIN_MAG_MIP_POINT;
-
 };
 
-struct VS_IN
+
+
+struct VS_INgs
 {
-    float4 Position: POSITION;
-	uint VertexID: SV_VertexID;
+    float4 Position	: POSITION;
+    float4 Color	: COLOR0;
+    float2 TexCoord	: TEXTURECOORD;
 };
-struct VS_OUT
+struct VS_OUTgs
 {
-    float4 position : SV_POSITION;		//Position
-	float2 texcoord : TexCoord0;
+	float4 Position	: POSITION;
+    float4 Color	: COLOR;
+    float2 TexCoord	: TEXTURECOORD;
 };
-
+struct GS_OUT
+{
+	float4 pos		: SV_POSITION;
+	float3 Position	: TEXCOORD2;
+    float4 Color	: COLOR0;
+    float Distance	: TEXCOORD1;
+    float2 TexCoord	: TEXTURECOORD;
+};
 #define kPI 3.1415926536f
-VS_OUT VSfullScreen( VS_IN input)
+VS_OUTgs VSgs( VS_INgs input)
 {
-    VS_OUT  Out;
-	Out.position = float4(input.Position.xyz,1);
-
-	Out.texcoord.x = (1+input.Position.x)*0.5f;
-	Out.texcoord.y = (1-input.Position.y)*0.5f;
+    VS_OUTgs  Out;
+	Out.Position = input.Position;
+	Out.Color = input.Color;
+	Out.TexCoord = input.TexCoord;
 	return Out;
 }
-VS_OUT VS( VS_IN input)
+static const float3 g_positions[4] =
 {
-    VS_OUT  Out;
-	Out.texcoord.x = (1+input.Position.x)*0.5f;
-	Out.texcoord.y = (1-input.Position.y)*0.5f;
-	Out.position = mul(input.Position, WorldViewProjection);
+float3( -1, 1, 0 ),
+float3( 1, 1, 0),
+float3( -1, -1, 0 ),
+float3( 1, -1, 0 ),
+};
+float3	CameraDirection;
+[maxvertexcount(4)]
+void GS( point VS_OUTgs input[1], inout TriangleStream<GS_OUT> stream )
+{
+  static const float scale = 1;
+  GS_OUT output;
+  output.Color = input[0].Color;
+  output.Position = input[0].Position.xyz;
+  output.Distance = input[0].Position.w;
+  float NdC = dot(CameraDirection, normalize(input[0].Position - Camera));
+  float3 Pos = mul(float4(input[0].Position.xyz,1), View).xyz;
+  float4 v1 = float4(Pos+ g_positions[0]*output.Distance,1);
+  float4 v2 = float4(Pos+ g_positions[1]*output.Distance,1);
+  float4 v3 = float4(Pos+ g_positions[2]*output.Distance,1);
+  float4 v4 = float4(Pos+ g_positions[3]*output.Distance,1);
 
-	return Out;
+  
+  output.pos = mul(v1, Projection);
+  output.TexCoord = float2(0,0);
+  stream.Append(output);
+
+  output.pos = mul(v2, Projection);
+  output.TexCoord = float2(1,0);
+  stream.Append(output);
+  
+  output.pos = mul(v3, Projection);
+  output.TexCoord = float2(0,1);
+  stream.Append(output);
+  
+  output.pos = mul(v4, Projection);
+  output.TexCoord = float2(1,1);
+  stream.Append(output);
 }
 
 half3 decode (half3 enc)
@@ -66,17 +107,20 @@ float3 DepthToPosition(float2 TexCoord, float d, float4x4 InvertViewProjection)
 	position /= position.w;
 	return position;
 }
-float4 Phong(float3 LightDirection, float3 position, float3 Normal)
+float4 Phong(float3 Color, float3 LightPosition, float LightDistance, float3 position, float3 Normal)
 {
+	float3 LightDirection = normalize(-position.xyz+LightPosition);
 	float NdL = saturate(dot(LightDirection, Normal));
 	float3 H = normalize(normalize(Camera - position) + LightDirection);
 	float NdH =  pow( saturate( dot( H, Normal ) ), 60.0f );
+	//return float4(NdL * Color.rgb, 1);
 	float4 result = saturate(1 -  (distance(position, LightPosition) / LightDistance));
 	result *= LightIntensity*float4(NdL * Color.rgb, NdH);
 	return result;
 }
-float4 Phong(float3 LightDirection, float3 position, float3 Normal, float specularExp, float specularInt)
+float4 Phong(float3 Color, float3 LightPosition, float LightDistance, float3 position, float3 Normal, float specularExp, float specularInt)
 {
+	float3 LightDirection = normalize(LightPosition-position.xyz);
 	float NdL = saturate(dot(LightDirection, Normal));
 	float3 H = normalize(normalize(Camera - position) + LightDirection);
 	float NdH =  specularInt*pow( saturate( dot( H, Normal ) ), 24*specularExp );
@@ -84,21 +128,25 @@ float4 Phong(float3 LightDirection, float3 position, float3 Normal, float specul
 	result *= LightIntensity*float4(NdL * Color.rgb, NdH);
 	return result;
 }
-float4 PS( VS_OUT input ) : SV_TARGET
+
+float4 PSgs( GS_OUT input ) : SV_TARGET
 {
+	//return float4(1.0,0.5,0.5,1); 
 	float4 result = 0;
-	float2 TexCoord = input.position.xy/float2(1280,720);
+	float2 TexCoord = input.pos.xy/float2(1280,720);
+	//return float4(TexCoord, 0, 1);
+	float3 LightPosition = input.Position.xyz;
 	float d = DepthMap.Sample(TexSampler, TexCoord);
 	if(d<=0)
 	{
-		return (1,0,0,0);
+		return float4(0.2,0.3,0.4,0);
 		return 0;
 	}
 	float3 position = DepthToPosition(TexCoord, d, InvertViewProjection);
 	float3 normal = decode(float3(NormalMap.Sample(TexSampler, TexCoord).rg,1));
-	float3 direction = normalize(LightPosition-position.xyz);
-	 result = Phong(direction, position.xyz, normal);
-	 return result;
+	
+	 result = Phong(float3(0.3,1,0.3), LightPosition, input.Distance, position.xyz, normal);
+	 return (float4(result.xyz,1));
 }
 
 DepthStencilState DisableDepth
@@ -106,16 +154,34 @@ DepthStencilState DisableDepth
     DepthEnable = FALSE;
     DepthWriteMask = ALL;
 };
+RasterizerState CullingMode
+{
+	CULLMODE = NONE;
+};
+BlendState AdditiveBlend
+{
+    AlphaToCoverageEnable = false;
+    BlendEnable[0] = true;
+    SrcBlend = ONE;
+    DestBlend = ONE;
+    BlendOp = ADD;
+    SrcBlendAlpha = ONE;
+    DestBlendAlpha = ZERO;
+    BlendOpAlpha = ADD;
+    RenderTargetWriteMask[0] = 0x0F;
+};
 
-technique11 PointLight
+technique11 PointLightGS
 {
     pass P0
     {
 		 SetDepthStencilState( DisableDepth, 0 );
-        SetVertexShader( CompileShader( vs_5_0, VS() ) );
+		 SetBlendState( AdditiveBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		// SetRasterizerState(CullingMode);
+        SetVertexShader( CompileShader( vs_5_0, VSgs() ) );
         SetHullShader( NULL );
         SetDomainShader( NULL );
-        SetGeometryShader( NULL );
-        SetPixelShader( CompileShader( ps_5_0, PS() ) );
+        SetGeometryShader( CompileShader( gs_5_0, GS() )  );
+        SetPixelShader( CompileShader( ps_5_0, PSgs() ) );
     }
 }

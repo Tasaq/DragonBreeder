@@ -48,7 +48,8 @@ namespace DragonBreeder
         AnimatedModel testAnimation;
         TerrainModel terrain;
         TerrainMaterial materialTerrain;
-        PointLight light = new PointLight();
+        DirectionalLight light = new DirectionalLight();
+        PointLight pLight = new PointLight();
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -77,28 +78,33 @@ namespace DragonBreeder
         /// </summary>
         protected override void LoadContent()
         {
-            GrahicObject.ContentManager = Content;
+            GraphicObject.ContentManager = Content;
             
             // Create a new SpriteBatch, which can be used to draw textures.
             proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testModel = new StaticModelTS("sphereTest");
-            testModel.World = Matrix.CreateTranslation(0, 0, 0);
             testAnimation = new AnimatedModel("piramidus");
             //instancedModel = new TerrainModel("redBox");
             testAnimation.World =  Matrix.CreateTranslation(0, 0.0f, 0);
             testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
-            testModel.DispalcementMap = Content.Load<Texture2D>("randomDots");
             testAnimation.startAnimation("run");
+            testModel.DispalcementMap = Content.Load<Texture2D>("randomDots");
+            testModel.World = Matrix.CreateScale(1)* Matrix.CreateTranslation(0, 0, 0);
             proc.LoadContent();
             light.Position = new Vector3(1, 2, 1);
             light.Color = new Vector3(1, 1, 1);
             light.Distance = 10.0f;
             proc.Add(light);
+            pLight.Position = new Vector3(0, 0, 0);
+            pLight.Distance = 2.0f;
+            pLight.Color = Color.OrangeRed.ToVector3();
+            proc.Add(pLight);
           //  proc.Add(testAnimation);
             camera = proc.Camera;
-
-
+            camera.Position = new Vector3(0, 0, 0);
+            camera.LookAt = new Vector3(0, 0, 1);
+            dirUnit = new Vector3(0, -0.1f, 0.9f);
             proc.Add(testModel);
 
             materialTerrain = new TerrainMaterial(Color.LightBlue);
@@ -114,8 +120,8 @@ namespace DragonBreeder
 
             terrain = new TerrainModel(new Quad(GraphicsDevice, 70), materialTerrain);
             terrain.Camera = camera;
-            terrain.World = Matrix.CreateScale(20,20,2)* Matrix.CreateRotationX(MathHelper.PiOver2);
-         //   proc.Add(terrain);
+            terrain.World = Matrix.CreateScale(20, 20, 2) * Matrix.CreateRotationX(MathHelper.PiOver2) * Matrix.CreateTranslation(0,-1,0);
+            proc.Add(terrain);
             // TODO: use this.Content to load your game content here
         }
 
@@ -131,6 +137,7 @@ namespace DragonBreeder
         Vector2 angle = new Vector2();
         Vector3 dirUnit = new Vector3(0, 0, 1);
         float disp = 0.0f;
+        Vector2 MousePos = new Vector2();
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -153,15 +160,19 @@ namespace DragonBreeder
             if (mouseState.RightButton == ButtonState.Pressed)
             {
                 this.IsMouseVisible = false;
-                angle.X += (Window.ClientBounds.Center.X / 2 - mouseState.X) * 0.1f;
-                angle.Y -= (Window.ClientBounds.Center.Y / 2 - mouseState.Y) * 0.1f;
-                if ((Window.ClientBounds.Center.Y / 2 - mouseState.Y) != 0 || (Window.ClientBounds.Center.X / 2 - mouseState.X) != 0)
+                angle.X += (MousePos.X - mouseState.X) * 0.1f;
+                angle.Y -= (MousePos.Y - mouseState.Y) * 0.1f;
+                if ((MousePos.Y - mouseState.Y) != 0 || (MousePos.X - mouseState.X) != 0)
                 {
                     dirUnit.X = MathHelper.ToRadians(angle.X);
                     dirUnit = new Vector3(0, 0, 1);
                     dirUnit = Vector3.Transform(dirUnit, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(angle.X), MathHelper.ToRadians(-angle.Y), 0));
                     dirUnit *= camspeed;
                 }
+            }
+            else
+            {
+                MousePos = new Vector2(mouseState.X, mouseState.Y);
             }
             if (keyboardState.IsKeyDown(Keys.S))
             {
@@ -183,9 +194,17 @@ namespace DragonBreeder
                 CamPos += Vector3.Cross(Vector3.UnitY, dirUnit);
                 // CamPos.Z -= dirUnit.Z;
             }
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                PointLight p = new PointLight();
+                p.Position = camera.Position;
+                p.Color = Color.Blue.ToVector3();
+                p.Distance = 2;
+                proc.Add(p);
+            }
 
             if (mouseState.RightButton == ButtonState.Pressed)
-                Mouse.SetPosition(Window.ClientBounds.Center.X / 2, Window.ClientBounds.Center.Y / 2);
+                Mouse.SetPosition((int)MousePos.X, (int)MousePos.Y);
             camera.LookAt = CamPos - dirUnit * 30;
             camera.Position = CamPos;
             testAnimation.Update(gameTime, true);
@@ -219,11 +238,11 @@ namespace DragonBreeder
         protected override void Draw(GameTime gameTime)
         {
 
-           // GraphicsDevice.setWireframeView();
             proc.G_BufferDraw();
-          //  GraphicsDevice.setNormalView();
-            proc.LightBufferDraw();
-            temp =  proc.CombineLightingAndAlbedo();
+       //    GraphicsDevice.setNormalView();
+         //   GraphicsDevice.setWireframeView();
+           temp = proc.LightBufferDraw();
+           proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
             

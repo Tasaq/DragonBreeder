@@ -143,6 +143,7 @@ namespace DragonBreeder
         }
         public void RenderQuad()
         {
+            
             GraphicsDevice.VertexDeclaration = vdecl;
             //GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleListWithAdjacency, vertices, 0, vertices.Length / 4);
             GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);

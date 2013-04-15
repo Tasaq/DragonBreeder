@@ -22,22 +22,22 @@ struct HS_PATCH_DATA
 };
 struct HS_CONTROL_POINT
 {
-	float4 pos		: POSITION0;
-	float3 norm		: NORMAL0;
-	float4 TexCoord : TEXCOORD0;
+	float4 pos		: POSITION;
+	float3 norm		: NORMAL;
+	float4 TexCoord : TEXTURECOORD;
 };
 
 struct VS_IN
 {
-    float4 Position : POSITION0;
-	float3 Normal : NORMAL0;
-	float4 TexCoord : TEXCOORD0;
+    float4 Position : POSITION;
+	float3 Normal : NORMAL;
+	float4 TexCoord : TEXTURECOORD;
 };
 struct VS_OUT
 {
     float4 Position : SV_POSITION;
 	float3 Normal : NORMAL;
-	float2 TexCoord : TEXCOORD;
+	float2 TexCoord : TEXTURECOORD;
 	float4 pos : TEXCOORD1;
 };
 struct PS_OUT
@@ -50,7 +50,7 @@ struct DS_OUTPUT
 {
     float4 Position : POSITION;
 	float3 Normal : NORMAL;
-	float4 TexCoord : TEXCOORD;
+	float4 TexCoord : TEXTURECOORD;
 };
 
 

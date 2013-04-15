@@ -37,7 +37,7 @@ using DragonBreeder.Graphics;
 
 namespace DragonBreeder
 {
-    class StaticModelTS : GrahicObject, IModelEntity
+    class StaticModelTS : GraphicObject, IModelEntity
     {
         Model model;
         public Texture2D DispalcementMap { get; set; }

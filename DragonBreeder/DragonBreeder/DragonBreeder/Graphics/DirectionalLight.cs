@@ -32,12 +32,55 @@ using VertexElementUsage = Microsoft.Xna.Framework.Graphics.VertexElementUsage;
 using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
-using Microsoft.Xna.Framework.Content;
 
 namespace DragonBreeder.Graphics
 {
-    class GrahicObject
+    class DirectionalLight : ILight
     {
-        static public ContentManager ContentManager { get; set; }
+        Vector3 position;
+        Vector3 color;
+        float distance;
+
+        public Vector3 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+
+        public Vector3 Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                color = value;
+            }
+        }
+
+        public float Distance
+        {
+            get
+            {
+                return distance;
+            }
+            set
+            {
+                distance = value;
+            }
+        }
+        public DirectionalLight()
+        {
+            Position = new Vector3();
+            Color = Microsoft.Xna.Framework.Color.White.ToVector3();
+            Distance = float.MaxValue;
+        }
     }
 }

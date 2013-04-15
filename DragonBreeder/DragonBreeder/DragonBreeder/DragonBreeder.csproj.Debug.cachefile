@@ -5,8 +5,11 @@ Content\DirectionalLight.xnb
 Content\AnimatedModel.xnb
 Content\Terrain.xnb
 Content\StaticModelTS.xnb
+Content\testScene.xnb
 Content\piramidus.xnb
+Content\lowPolyTeaPot.xnb
 Content\redBox.xnb
+Content\sphereTest.xnb
 Content\heightMap.xnb
 Content\kafle.xnb
 Content\large_grass.xnb
@@ -18,11 +21,8 @@ Content\snowHill.xnb
 Content\grassRock.xnb
 Content\bmpTestFile.xnb
 Content\zakopane.xnb
+Content\randomDots.xnb
 Content\kamyczki_0.xnb
 Content\stone-wall-seamless_0.xnb
 Content\PiraSword_0.xnb
-Content\lowPolyTeaPot.xnb
-Content\testScene.xnb
 Content\randomDots_0.xnb
-Content\sphereTest.xnb
-Content\randomDots.xnb

@@ -33,49 +33,11 @@ using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace DragonBreeder.Graphics
 {
-    struct VertexPointLight : IVertexType
+    class GraphicObject
     {
-        Vector4 position;
-        Color color;
-        Vector2 texCoord;
-        public readonly static Microsoft.Xna.Framework.Graphics.VertexDeclaration VertexDeclaration = new Microsoft.Xna.Framework.Graphics.VertexDeclaration
-        (
-            new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.Position, 0),
-            new VertexElement(sizeof(float)*4, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-            new VertexElement(sizeof(float) * 4 + sizeof(int), VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
-        );
-        public VertexPointLight(Vector4 pos, Color color, Vector2 textureCoordinate)
-        {
-            this.position = pos;
-            this.color = color;
-            this.texCoord = textureCoordinate;
-        }
-
-        //Public methods for accessing the components of the custom vertex.
-        public Vector4 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-
-        public Vector2 TextureCoordinate
-        {
-            get { return texCoord; }
-            set { texCoord = value; }
-        }
-
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
-        Microsoft.Xna.Framework.Graphics.VertexDeclaration IVertexType.VertexDeclaration
-        {
-            get { return VertexDeclaration; }
-        }
+        static public ContentManager ContentManager { get; set; }
     }
 }

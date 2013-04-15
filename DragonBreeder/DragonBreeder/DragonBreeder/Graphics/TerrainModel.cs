@@ -72,7 +72,7 @@ namespace DragonBreeder.Graphics
         }
 
     }
-    class TerrainModel : GrahicObject, IModelEntity
+    class TerrainModel : GraphicObject, IModelEntity
     {
         int count = 2;
         Quad quad;

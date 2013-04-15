@@ -37,7 +37,7 @@ using DragonBreeder.Graphics;
 
 namespace DragonBreeder
 {
-    class StaticModel : GrahicObject, IModelEntity
+    class StaticModel : GraphicObject, IModelEntity
     {
         Model model;
         public Matrix World { get; set; }

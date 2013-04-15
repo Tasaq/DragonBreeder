@@ -36,7 +36,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DragonBreeder.Graphics
 {
-    class AnimatedModel : GrahicObject, IModelEntity
+    class AnimatedModel : GraphicObject, IModelEntity
     {
         Model model;
         public Matrix World { get; set; }

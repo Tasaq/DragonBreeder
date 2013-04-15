@@ -32,50 +32,56 @@ using VertexElementUsage = Microsoft.Xna.Framework.Graphics.VertexElementUsage;
 using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DragonBreeder.Graphics
 {
-    struct VertexPointLight : IVertexType
+
+    class LightPoints
     {
-        Vector4 position;
-        Color color;
-        Vector2 texCoord;
-        public readonly static Microsoft.Xna.Framework.Graphics.VertexDeclaration VertexDeclaration = new Microsoft.Xna.Framework.Graphics.VertexDeclaration
-        (
-            new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.Position, 0),
-            new VertexElement(sizeof(float)*4, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-            new VertexElement(sizeof(float) * 4 + sizeof(int), VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
-        );
-        public VertexPointLight(Vector4 pos, Color color, Vector2 textureCoordinate)
-        {
-            this.position = pos;
-            this.color = color;
-            this.texCoord = textureCoordinate;
-        }
+        List<PointLight> points;
+        private GraphicsDevice GraphicsDevice;
+        JBBRXG11.VertexDeclaration vdecl;
 
-        //Public methods for accessing the components of the custom vertex.
-        public Vector4 Position
+        VertexPointLight[] vertices;
+        public LightPoints(GraphicsDevice device)
         {
-            get { return position; }
-            set { position = value; }
-        }
+            GraphicsDevice = device;
+            vdecl = new VertexDeclaration(VertexPointLight.VertexDeclaration.GetVertexElements());
 
-        public Vector2 TextureCoordinate
-        {
-            get { return texCoord; }
-            set { texCoord = value; }
+            points = new List<PointLight>();
         }
+        public void Add(PointLight light)
+        {
+            points.Add(light);
+        }
+        void Update()
+        {
 
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
+            if (vertices == null && points.Count > 0)
+            {
+                vertices = new VertexPointLight[points.Count];
+            }
+            if (points.Count != vertices.Length)
+            {
+                vertices = new VertexPointLight[points.Count];
+                for (int i = 0; i < points.Count; i++)
+                {
+
+                    vertices[i].Position = new Vector4( points[i].Position,points[i].Distance);
+                    vertices[i].Color = new Color( points[i].Color);
+                    vertices[i].TextureCoordinate = new Vector2(0.5f,0.5f);
+                }
+            }
         }
-        Microsoft.Xna.Framework.Graphics.VertexDeclaration IVertexType.VertexDeclaration
+        public void Draw()
         {
-            get { return VertexDeclaration; }
+            Update();
+            if (vertices.Length > 0)
+            {
+                GraphicsDevice.VertexDeclaration = vdecl;
+                GraphicsDevice.DrawUserPrimitives<VertexPointLight>(PrimitiveType.PointList, vertices, 0, vertices.Length);
+            }
         }
     }
 }

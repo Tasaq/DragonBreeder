@@ -97,7 +97,7 @@ float2 rand_2_10(in float2 uv) {
     float noiseY = sqrt(1 - noiseX * noiseX);
     return float2(noiseX, noiseY);
 }
-float TessellationFactor = 16;
+float TessellationFactor = 7;
 [domain("tri")]
 HS_PATCH_DATA HS_PatchConstant(OutputPatch<HS_CONTROL_POINT, 3> controlPoints, uint pid : SV_PrimitiveID)
 {
