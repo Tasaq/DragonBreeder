@@ -105,9 +105,20 @@ namespace DragonBreeder
             foreach (var Model in models)
             {
                 Model.SetViewProjection(VP);
+                if (Model is AnimatedModel)
+                {
+                    AnimatedModel m = Model as AnimatedModel;
+                    if(m.SwapCullMode == true)
+                        GraphicsDevice.RenderState.CullMode = CullMode.CullClockwiseFace;
+                    else
+                        GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
+                }
+                else
+                {
+                    GraphicsDevice.RenderState.CullMode = CullMode.CullCounterClockwiseFace;
+                }
                 Model.Draw();
             }
-
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
@@ -139,21 +150,24 @@ namespace DragonBreeder
                 quad.RenderQuad(DirectionalLight);
              //   quad.RenderQuad(light.Position, light.Distance, Camera, lighting);
             }
-            PointLight.CurrentTechnique = PointLight.Techniques["PointLightGS"];
-            PointLight.Parameters["DepthMap"].SetValue(g_depth);
-            PointLight.Parameters["NormalMap"].SetValue(g_normal);
-            PointLight.Parameters["Camera"].SetValue(Camera.Position);
-            Console.WriteLine(Camera.ViewMatrix.Up);
-            PointLight.Parameters["CameraDirection"].SetValue(Vector3.Normalize(Camera.LookAt - Camera.Position) );
-            PointLight.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
-            PointLight.Parameters["ViewProjection"].SetValue(VP);
-            PointLight.Parameters["View"].SetValue(Camera.ViewMatrix);
-            PointLight.Parameters["Projection"].SetValue(Camera.ProjectionMatrix);
-            PointLight.Begin();
-            PointLight.CurrentTechnique.Passes[0].Begin();
-            PointLights.Draw();
-            PointLight.CurrentTechnique.Passes[0].End();
-            PointLight.End();
+            //TODO: off for a while to test dragons
+            if(false)
+            {
+                PointLight.CurrentTechnique = PointLight.Techniques["PointLightGS"];
+                PointLight.Parameters["DepthMap"].SetValue(g_depth);
+                PointLight.Parameters["NormalMap"].SetValue(g_normal);
+                PointLight.Parameters["Camera"].SetValue(Camera.Position);
+                PointLight.Parameters["CameraDirection"].SetValue(Vector3.Normalize(Camera.LookAt - Camera.Position) );
+                PointLight.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(VP));
+                PointLight.Parameters["ViewProjection"].SetValue(VP);
+                PointLight.Parameters["View"].SetValue(Camera.ViewMatrix);
+                PointLight.Parameters["Projection"].SetValue(Camera.ProjectionMatrix);
+                PointLight.Begin();
+                PointLight.CurrentTechnique.Passes[0].Begin();
+                PointLights.Draw();
+                PointLight.CurrentTechnique.Passes[0].End();
+                PointLight.End();
+            }
             return lightBuffer;
         }
         public RenderTarget2D CombineLightingAndAlbedo()

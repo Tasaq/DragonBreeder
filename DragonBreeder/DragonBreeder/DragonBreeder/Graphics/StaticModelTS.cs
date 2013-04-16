@@ -40,6 +40,8 @@ namespace DragonBreeder
     class StaticModelTS : GraphicObject, IModelEntity
     {
         Model model;
+        public Model Model { get { return model; } }
+
         public Texture2D DispalcementMap { get; set; }
         public Matrix World { get; set; }
         public Matrix ViewProjection { get; set; }

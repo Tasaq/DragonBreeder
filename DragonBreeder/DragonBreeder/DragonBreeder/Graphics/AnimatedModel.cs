@@ -38,10 +38,13 @@ namespace DragonBreeder.Graphics
 {
     class AnimatedModel : GraphicObject, IModelEntity
     {
+        bool swapCullMode = false;
+        public bool SwapCullMode { get { return swapCullMode; } set { swapCullMode = value; } }
         Model model;
         public Matrix World { get; set; }
         public Matrix ViewProjection { get; set; }
         static Effect effect;
+        public Model Model {get { return model;} }
         //static public ContentManager ContentManager { get; set; }
         string technique;
         public AnimatedModel(string name)
@@ -79,7 +82,7 @@ namespace DragonBreeder.Graphics
                     effect.Parameters["ModelTexture"].SetValue(mesh.Material.texture);
                 }
 
-
+                
                 mesh.Effects[0].Begin();
                 mesh.Effects[0].CurrentTechnique.Passes[0].Begin();
                 mesh.Draw();
@@ -112,6 +115,10 @@ namespace DragonBreeder.Graphics
         public void Update(GameTime time, bool repeat)
         {
             model.UpdateAnimation(time, repeat);
+        }
+        public Matrix getBone(string name)
+        {
+            return model.getBoneMatrix(name);
         }
     }
 }

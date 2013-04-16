@@ -74,6 +74,8 @@ namespace DragonBreeder.Graphics
     }
     class TerrainModel : GraphicObject, IModelEntity
     {
+
+        public  Model Model { get { return null; } }
         int count = 2;
         Quad quad;
         int Dimmensions = 3;

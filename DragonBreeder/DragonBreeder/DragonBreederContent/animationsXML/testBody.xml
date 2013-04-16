@@ -1,0 +1,8 @@
+<animation>
+<Frames>100</Frames>
+	<animationClip>
+		<name>nothing</name>
+		<startFrame>0</startFrame>
+		<endFrame>100</endFrame>
+	</animationClip>
+</animation>

@@ -9,6 +9,7 @@ namespace DragonBreeder
 {
     interface IModelEntity
     {
+        Model Model { get; }
         void SetViewProjection(Matrix VP);
         void Draw();
         void Draw(Effect effect);

@@ -6,10 +6,15 @@ Content\AnimatedModel.xnb
 Content\Terrain.xnb
 Content\StaticModelTS.xnb
 Content\testScene.xnb
-Content\piramidus.xnb
 Content\lowPolyTeaPot.xnb
+Content\Dragons\Body\testBody.xnb
 Content\redBox.xnb
 Content\sphereTest.xnb
+Content\Dragons\Tail\testTail.xnb
+Content\Dragons\Wing\testWing.xnb
+Content\Dragons\Head\testHead.xnb
+Content\Dragons\FrontLeg\testLeg.xnb
+Content\Dragons\HindLeg\testHleg.xnb
 Content\heightMap.xnb
 Content\kafle.xnb
 Content\large_grass.xnb
@@ -23,6 +28,4 @@ Content\bmpTestFile.xnb
 Content\zakopane.xnb
 Content\randomDots.xnb
 Content\kamyczki_0.xnb
-Content\stone-wall-seamless_0.xnb
-Content\PiraSword_0.xnb
 Content\randomDots_0.xnb

@@ -78,25 +78,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="piramidus.FBX">
-      <Name>piramidus</Name>
-      <Importer>JBBRXG11FBXModelContentImporter</Importer>
-      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
-      <ProcessorParameters_ResizeScale>0.008</ProcessorParameters_ResizeScale>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="lowPolyTeaPot.FBX">
       <Name>lowPolyTeaPot</Name>
       <Importer>JBBRXG11FBXModelContentImporter</Importer>
       <Processor>JBBRXG11FBXModelContentProcessor</Processor>
       <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
     </Compile>
-    <None Include="piramidus.xml">
-      <Name>piramidus</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </None>
+    <Compile Include="Dragons\Body\testBody.FBX">
+      <Name>testBody</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
     <Compile Include="redBox.FBX">
       <Name>redBox</Name>
       <Importer>JBBRXG11FBXModelContentImporter</Importer>
@@ -217,6 +210,79 @@
       <ProcessorParameters_ResizeToPowerOfTwo>False</ProcessorParameters_ResizeToPowerOfTwo>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dragons\Body\testBody.xml">
+      <Name>testBody</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+    <Compile Include="Dragons\Tail\testTail.FBX">
+      <Name>testTail</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="Dragons\Wing\testWing.FBX">
+      <Name>testWing</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dragons\FrontLeg\testLeg.xml">
+      <Name>testLeg</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dragons\Head\testHead.FBX">
+      <Name>testHead</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="Dragons\FrontLeg\testLeg.FBX">
+      <Name>testLeg</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="Dragons\HindLeg\testHleg.FBX">
+      <Name>testHleg</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <None Include="Dragons\Tail\testTail.xml">
+      <Name>testTail</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dragons\Head\testHead.xml">
+      <Name>testHead</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Dragons\HindLeg\testHLeg.xml">
+      <Name>testHLeg</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Dragons\Wing\testWing.xml">
+      <Name>testWing</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -41,11 +41,13 @@ namespace DragonBreeder
     /// </summary>
     public class Game1 : JBBRXG11.Game
     {
+        Dragon dragon1 = new Dragon();
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GraphicsProcessor proc;
         StaticModelTS testModel;
-        AnimatedModel testAnimation;
+      //  AnimatedModel DragonTest;
         TerrainModel terrain;
         TerrainMaterial materialTerrain;
         DirectionalLight light = new DirectionalLight();
@@ -57,6 +59,7 @@ namespace DragonBreeder
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
             Window.Title = "DragonBreeder";
+            
         }
         Camera camera;
         /// <summary>
@@ -84,11 +87,11 @@ namespace DragonBreeder
             proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             testModel = new StaticModelTS("sphereTest");
-            testAnimation = new AnimatedModel("piramidus");
+            //DragonTest = new AnimatedModel("Dragons/Tail/testTail");
             //instancedModel = new TerrainModel("redBox");
-            testAnimation.World =  Matrix.CreateTranslation(0, 0.0f, 0);
-            testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
-            testAnimation.startAnimation("run");
+           // DragonTest.World =  Matrix.CreateTranslation(0, 0.0f, 0);
+            //testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
+          //  DragonTest.startAnimation("wave");
             testModel.DispalcementMap = Content.Load<Texture2D>("randomDots");
             testModel.World = Matrix.CreateScale(1)* Matrix.CreateTranslation(0, 0, 0);
             proc.LoadContent();
@@ -100,12 +103,15 @@ namespace DragonBreeder
             pLight.Distance = 2.0f;
             pLight.Color = Color.OrangeRed.ToVector3();
             proc.Add(pLight);
-          //  proc.Add(testAnimation);
+           // proc.Add(DragonTest);
             camera = proc.Camera;
             camera.Position = new Vector3(0, 0, 0);
             camera.LookAt = new Vector3(0, 0, 1);
             dirUnit = new Vector3(0, -0.1f, 0.9f);
-            proc.Add(testModel);
+           // proc.Add(testModel);
+            dragon1.LoadContent();
+            dragon1.World = (Matrix.CreateTranslation(0, 0, -5));
+            dragon1.AddToGraphicsProcessor(proc);
 
             materialTerrain = new TerrainMaterial(Color.LightBlue);
             materialTerrain.displacementMap = Content.Load<Texture2D>("zakopane");
@@ -118,7 +124,7 @@ namespace DragonBreeder
             materialTerrain.Textures.A = Content.Load<Texture2D>("sand02");
 
 
-            terrain = new TerrainModel(new Quad(GraphicsDevice, 70), materialTerrain);
+            terrain = new TerrainModel(new Quad(GraphicsDevice, 30), materialTerrain);
             terrain.Camera = camera;
             terrain.World = Matrix.CreateScale(20, 20, 2) * Matrix.CreateRotationX(MathHelper.PiOver2) * Matrix.CreateTranslation(0,-1,0);
             proc.Add(terrain);
@@ -207,7 +213,7 @@ namespace DragonBreeder
                 Mouse.SetPosition((int)MousePos.X, (int)MousePos.Y);
             camera.LookAt = CamPos - dirUnit * 30;
             camera.Position = CamPos;
-            testAnimation.Update(gameTime, true);
+            //DragonTest.Update(gameTime, true);
             testModel.EyeDirection = Vector3.Normalize( -camera.LookAt + camera.Position);
             if ((raise == true) && (disp <= 0.1f))
             {
@@ -227,7 +233,7 @@ namespace DragonBreeder
             }
             
             testModel.DisplacementScale = disp;
-            
+            dragon1.Update(gameTime);
             base.Update(gameTime);
         }
         RenderTarget2D temp;
@@ -241,8 +247,8 @@ namespace DragonBreeder
             proc.G_BufferDraw();
        //    GraphicsDevice.setNormalView();
          //   GraphicsDevice.setWireframeView();
-           temp = proc.LightBufferDraw();
-           proc.CombineLightingAndAlbedo();
+           proc.LightBufferDraw();
+           temp = proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
             

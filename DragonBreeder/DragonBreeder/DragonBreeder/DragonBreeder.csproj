@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Graphics\AnimatedModel.cs" />
     <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\Dragon.cs" />
     <Compile Include="Graphics\GraphicObject.cs" />
     <Compile Include="Graphics\DirectionalLight.cs" />
     <Compile Include="Graphics\GraphicsProcessor.cs" />

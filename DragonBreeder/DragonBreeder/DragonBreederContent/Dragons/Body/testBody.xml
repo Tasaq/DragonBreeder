@@ -1,0 +1,8 @@
+<animation>
+<Frames>100</Frames>
+	<animationClip>
+		<name>wave</name>
+		<startFrame>0</startFrame>
+		<endFrame>40</endFrame>
+	</animationClip>
+</animation>

@@ -40,6 +40,8 @@ namespace DragonBreeder
     class StaticModel : GraphicObject, IModelEntity
     {
         Model model;
+
+        public Model Model { get { return model; } }
         public Matrix World { get; set; }
         public Matrix ViewProjection { get; set; }
         static Effect effect;
