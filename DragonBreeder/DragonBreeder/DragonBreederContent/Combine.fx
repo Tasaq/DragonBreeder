@@ -33,12 +33,36 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	 return float4(color.rgb * light.rgb + light.a * normalize(light.rgb), 1);
 }
 
+DepthStencilState DisableDepth
+{
+    DepthEnable = FALSE;
+    DepthWriteMask = ALL;
+};
+RasterizerState CullingMode
+{
+	CULLMODE = NONE;
+};
+BlendState AdditiveBlend
+{
+    AlphaToCoverageEnable = false;
+    BlendEnable[0] = true;
+    SrcBlend = ONE;
+    DestBlend = ONE;
+    BlendOp = ADD;
+    SrcBlendAlpha = ONE;
+    DestBlendAlpha = ZERO;
+    BlendOpAlpha = ADD;
+    RenderTargetWriteMask[0] = 0x0F;
+};
 
 
 technique11 PointLight
 {
     pass P0
     {
+		SetDepthStencilState( DisableDepth, 0 );
+		SetBlendState( AdditiveBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+		 SetRasterizerState(CullingMode);
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
         SetHullShader( NULL );
         SetDomainShader( NULL );

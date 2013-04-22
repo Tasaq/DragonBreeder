@@ -42,7 +42,7 @@ namespace DragonBreeder
     public class Game1 : JBBRXG11.Game
     {
         Dragon dragon1 = new Dragon();
-
+        SkyCloudSystem clouds;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GraphicsProcessor proc;
@@ -55,6 +55,7 @@ namespace DragonBreeder
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+           // graphics.PreferredBackBufferFormat = SurfaceFormat.HdrBlendable;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
@@ -82,7 +83,7 @@ namespace DragonBreeder
         protected override void LoadContent()
         {
             GraphicObject.ContentManager = Content;
-            
+            GraphicObject.GraphicsDevice = GraphicsDevice;
             // Create a new SpriteBatch, which can be used to draw textures.
             proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -108,7 +109,7 @@ namespace DragonBreeder
             camera.Position = new Vector3(0, 0, 0);
             camera.LookAt = new Vector3(0, 0, 1);
             dirUnit = new Vector3(0, -0.1f, 0.9f);
-           // proc.Add(testModel);
+            proc.Add(testModel);
             dragon1.LoadContent();
             dragon1.World = (Matrix.CreateTranslation(0, 0, -5));
             dragon1.AddToGraphicsProcessor(proc);
@@ -124,10 +125,12 @@ namespace DragonBreeder
             materialTerrain.Textures.A = Content.Load<Texture2D>("sand02");
 
 
-            terrain = new TerrainModel(new Quad(GraphicsDevice, 30), materialTerrain);
+            terrain = new TerrainModel(new Quad(GraphicsDevice, 40), materialTerrain);
             terrain.Camera = camera;
             terrain.World = Matrix.CreateScale(20, 20, 2) * Matrix.CreateRotationX(MathHelper.PiOver2) * Matrix.CreateTranslation(0,-1,0);
             proc.Add(terrain);
+            clouds = new SkyCloudSystem(100);
+            clouds.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
@@ -155,7 +158,7 @@ namespace DragonBreeder
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
             Vector3 CamPos = camera.Position;
-            float camspeed = 0.02f;
+            float camspeed = 0.2f;
             float lightspeed = 0.05f;
             //Vector3 LightPos = light.lightPosition;
             MouseState mouseState = Mouse.GetState();
@@ -250,11 +253,12 @@ namespace DragonBreeder
            proc.LightBufferDraw();
            temp = proc.CombineLightingAndAlbedo();
             GraphicsDevice.SetRenderTarget(0, null);
-            GraphicsDevice.Clear(new Color(162, 173, 208, 255)/*Wild blue yonder*/);
+            GraphicsDevice.Clear(new Color(255,0,0,255)/*Wild blue yonder*/);
             
-            spriteBatch.Begin(BlendState.Opaque);
+            spriteBatch.Begin();
             spriteBatch.Draw(temp, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.End();
+           // clouds.Draw(camera);
             base.Draw(gameTime);
         }
     }

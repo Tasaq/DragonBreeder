@@ -40,6 +40,8 @@ namespace DragonBreeder
 {
     class GraphicsProcessor
     {
+        SkyCloudSystem clouds;
+
         RenderTarget2D g_depth;
         RenderTarget2D g_normal;
         RenderTarget2D g_color;
@@ -52,7 +54,7 @@ namespace DragonBreeder
 
         ContentManager ContentManager;
         GraphicsDevice GraphicsDevice;
-
+        Box3D box;
         List<IModelEntity> models = new List<IModelEntity>();
         List<ILight> lights = new List<ILight>();
         LightPoints PointLights;
@@ -60,6 +62,9 @@ namespace DragonBreeder
         Effect DirectionalLight;
         Effect PointLight;
         Effect combine;
+
+        public RenderTarget2D SunOcclTest;
+        public RenderTarget2D Shafts;
         public GraphicsProcessor(GraphicsDeviceManager device, ContentManager manager,int width, int height)
         {
             Camera = new Camera();
@@ -72,14 +77,19 @@ namespace DragonBreeder
             g_color = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             lightBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             resultingBuffer = new RenderTarget2D(GraphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            SunOcclTest = new RenderTarget2D(GraphicsDevice, width, height, true, SurfaceFormat.Color, DepthFormat.Depth24);
+            Shafts = new RenderTarget2D(GraphicsDevice, width, height, true, SurfaceFormat.Color, DepthFormat.Depth24);
             quad = new QuadRender(GraphicsDevice);
             PointLights = new LightPoints(GraphicsDevice);
+            clouds = new SkyCloudSystem(10000);
         }
         public void LoadContent()
         {
             DirectionalLight = ContentManager.Load<Effect>("DirectionalLight");
             PointLight = ContentManager.Load<Effect>("PointLight");
             combine = ContentManager.Load<Effect>("combine");
+            box = new Box3D();
+            clouds.LoadContent();
         }
         public void Add(IModelEntity model)
         {
@@ -99,7 +109,7 @@ namespace DragonBreeder
             GraphicsDevice.SetRenderTarget(0, g_depth);
             GraphicsDevice.SetRenderTarget(1, g_normal);
             GraphicsDevice.SetRenderTarget(2, g_color);
-            GraphicsDevice.Clear(0, Color.Black);
+            GraphicsDevice.Clear(0, Color.Transparent);
             GraphicsDevice.Clear(1, Color.Black);
             GraphicsDevice.Clear(2, Color.Black);
             foreach (var Model in models)
@@ -119,10 +129,11 @@ namespace DragonBreeder
                 }
                 Model.Draw();
             }
+      //      clouds.Draw(Camera);
             GraphicsDevice.SetRenderTarget(0, null);
             GraphicsDevice.SetRenderTarget(1, null);
             GraphicsDevice.SetRenderTarget(2, null);
-            return g_depth;
+            return g_color;
         }
         private Vector2 toScreenSpace(Vector3 vec, Matrix VP)
         {
@@ -172,13 +183,42 @@ namespace DragonBreeder
         }
         public RenderTarget2D CombineLightingAndAlbedo()
         {
+            CreateSkybox();
             GraphicsDevice.SetRenderTarget(0, resultingBuffer);
-            GraphicsDevice.Clear(0, Color.Gray);
+            GraphicsDevice.Clear(Color.Black);
             combine.CurrentTechnique = combine.Techniques["PointLight"];
             combine.Parameters["LightMap"].SetValue(lightBuffer);
             combine.Parameters["ColorMap"].SetValue(g_color);
             quad.RenderQuad(combine);
+            // clouds.Draw(Camera);
+            clouds.DrawClouds(g_depth, Camera);
+            clouds.DrawClouds(g_depth, Camera);
+            clouds.PrepareParamsShafts(SunOcclTest, Camera);
+            quad.RenderQuad(clouds.Effect);
+            GraphicsDevice.SetRenderTarget(0, null);
+            GraphicsDevice.SetRenderTarget(0, null);
+            GraphicsDevice.SetRenderTarget(0, null);
             return resultingBuffer;
         }
+
+        public void CreateSkybox()
+        {
+            GraphicsDevice.SetRenderTarget(0, g_color);
+            clouds.World = Matrix.CreateScale(20) * Matrix.CreateTranslation(Camera.Position);
+            clouds.PrepareParamsSkyBox(g_depth, Camera);
+            box.draw(clouds.Effect);
+            GraphicsDevice.SetRenderTarget(0, null);
+            GraphicsDevice.SetRenderTarget(0, SunOcclTest);
+            GraphicsDevice.Clear(0, Color.Black);
+            clouds.PrepareParamsSun(g_depth, Camera);
+            quad.RenderQuad(clouds.Effect);
+            GraphicsDevice.SetRenderTarget(0, null);
+            //GraphicsDevice.SetRenderTarget(0, Shafts);
+            //GraphicsDevice.Clear(0, Color.Black);
+
+            //
+
+        }
+
     }
 }

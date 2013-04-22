@@ -89,6 +89,12 @@ namespace DragonBreeder
         VertexPositionNormalTexture[] vertices;
         private int[] ib = null;
         int primitiveCount;
+
+        //JBBRXG11.VertexDeclaration vdecl;
+        // VertexPositionTexture[] vertices;
+        VertexBuffer vbuf;
+        IndexBuffer ibuf;
+
         public Quad(GraphicsDevice device)
         {
 
@@ -101,6 +107,11 @@ namespace DragonBreeder
             primitiveCount = 2;
             ib = new int[] { 0, 1, 2, 2, 3, 0 };
             vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+            vbuf = new VertexBuffer(GraphicsDevice, vdecl, vertices.Length, BufferUsage.WriteOnly);
+            vbuf.SetData(vertices);
+
+            ibuf = new IndexBuffer(device, ib.Length*4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
+            ibuf.SetData<int>(ib);
         }
         public Quad(GraphicsDevice device, int Count)
         {
@@ -140,13 +151,21 @@ namespace DragonBreeder
                 }
             }
             vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+            vbuf = new VertexBuffer(GraphicsDevice, vdecl, vertices.Length, BufferUsage.WriteOnly);
+            vbuf.SetData(vertices);
+
+            ibuf = new IndexBuffer(device, ib.Length * 4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
+            ibuf.SetData<int>(ib);
         }
         public void RenderQuad()
         {
-            
+
             GraphicsDevice.VertexDeclaration = vdecl;
-            //GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleListWithAdjacency, vertices, 0, vertices.Length / 4);
-            GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
+            GraphicsDevice.Vertices[0].SetSource(vbuf, 0, vdecl.GetVertexStrideSize());
+            GraphicsDevice.Indices = ibuf;
+           // GraphicsDevice.DrawPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, vertices.Length);
+            GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, 0, vertices.Length, 0, primitiveCount * 2);
+            // GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
         }
     }
 }

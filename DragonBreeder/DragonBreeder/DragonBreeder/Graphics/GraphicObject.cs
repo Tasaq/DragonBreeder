@@ -39,5 +39,6 @@ namespace DragonBreeder.Graphics
     class GraphicObject
     {
         static public ContentManager ContentManager { get; set; }
+        static public GraphicsDevice GraphicsDevice { get; set; }
     }
 }

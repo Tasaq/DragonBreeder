@@ -3,7 +3,7 @@ float4x4 InvertViewProjection;
 float4x4 LightViewProjection;
 float3 LightPosition;
 float LightDistance;
-float LightIntensity = 1;
+float LightIntensity = 0.4;
 float4 Color;
 float3 Camera;
 Texture2D NormalMap;
@@ -80,7 +80,7 @@ float4 PS( VS_OUT input ) : SV_TARGET
 	float d = DepthMap.Sample(TexSampler, TexCoord);
 	if(d.r <= 0)
 	{
-		return float4(0.2,0.3,0.4,0);
+		return float4(1,1,1,0);
 	}
 	float3 position = DepthToPosition(TexCoord, d, InvertViewProjection);
 	float3 normal = decode(float3(NormalMap.Sample(TexSampler, TexCoord).rg,1));

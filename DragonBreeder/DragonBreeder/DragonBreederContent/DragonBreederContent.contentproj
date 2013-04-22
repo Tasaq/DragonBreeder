@@ -269,7 +269,13 @@
       <Processor>PassThroughProcessor</Processor>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="CloudySky.fx">
+      <Name>CloudySky</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Dragons\HindLeg\testHLeg.xml">
       <Name>testHLeg</Name>
@@ -283,6 +289,29 @@
       <Importer>XmlImporter</Importer>
       <Processor>PassThroughProcessor</Processor>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cloud1.bmp">
+      <Name>cloud1</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="cloud2.bmp">
+      <Name>cloud2</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sun.bmp">
+      <Name>sun</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

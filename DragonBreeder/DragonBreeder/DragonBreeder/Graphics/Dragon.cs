@@ -28,7 +28,7 @@ namespace DragonBreeder.Graphics
         public Color DragonColor { get; set; }
         public Dragon()
         {
-            DragonColor = Color.Red;
+            DragonColor = Color.Gray;
             World = Matrix.CreateTranslation(0, 0, 0);
             bodyID = rand.Next(1, bodyCount);
             tailID = rand.Next(1, tailCount);

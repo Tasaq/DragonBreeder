@@ -58,7 +58,8 @@ namespace DragonBreeder.Graphics
         public float LOD;
         public float scale;
         public Vector3 Color;
-        
+
+
         public TerrainMaterial(Color color)
         {
             displacementMap = null;
@@ -87,6 +88,8 @@ namespace DragonBreeder.Graphics
         static Effect effect;
         string technique;
         TerrainMaterial Material { get; set; }
+
+
         public TerrainModel(Quad quad)
         {
             Dimmensions = 3;

@@ -144,7 +144,6 @@ float4 PSgs( GS_OUT input ) : SV_TARGET
 	}
 	float3 position = DepthToPosition(TexCoord, d, InvertViewProjection);
 	float3 normal = decode(float3(NormalMap.Sample(TexSampler, TexCoord).rg,1));
-	
 	 result = Phong(float3(0.3,1,0.3), LightPosition, input.Distance, position.xyz, normal);
 	 return (float4(result.xyz,1));
 }

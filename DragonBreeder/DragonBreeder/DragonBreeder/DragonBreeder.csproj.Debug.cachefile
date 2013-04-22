@@ -5,6 +5,7 @@ Content\DirectionalLight.xnb
 Content\AnimatedModel.xnb
 Content\Terrain.xnb
 Content\StaticModelTS.xnb
+Content\CloudySky.xnb
 Content\testScene.xnb
 Content\lowPolyTeaPot.xnb
 Content\Dragons\Body\testBody.xnb
@@ -27,5 +28,8 @@ Content\grassRock.xnb
 Content\bmpTestFile.xnb
 Content\zakopane.xnb
 Content\randomDots.xnb
+Content\cloud1.xnb
+Content\cloud2.xnb
+Content\sun.xnb
 Content\kamyczki_0.xnb
 Content\randomDots_0.xnb
