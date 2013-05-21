@@ -33,7 +33,8 @@ using VertexElement = Microsoft.Xna.Framework.Graphics.VertexElement;
 using ClearOptions = Microsoft.Xna.Framework.Graphics.ClearOptions;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using DragonBreeder.Graphics;
-
+using DragonBreeder.EngineModes;
+using DragonBreeder.TerrainEditing;
 namespace DragonBreeder
 {
     /// <summary>
@@ -41,26 +42,21 @@ namespace DragonBreeder
     /// </summary>
     public class Game1 : JBBRXG11.Game
     {
-        Dragon dragon1 = new Dragon();
-        SkyCloudSystem clouds;
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        GraphicsProcessor proc;
-        StaticModelTS testModel;
-      //  AnimatedModel DragonTest;
-        TerrainModel terrain;
-        TerrainMaterial materialTerrain;
-        DirectionalLight light = new DirectionalLight();
-        PointLight pLight = new PointLight();
+       public GraphicsDeviceManager graphics;
+       public SpriteBatch spriteBatch;
+
+       EngineMode mode;
+       int modePicker = 1;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-           // graphics.PreferredBackBufferFormat = SurfaceFormat.HdrBlendable;
+          //  graphics.PreferredBackBufferFormat = SurfaceFormat.HdrBlendable;
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
             Window.Title = "DragonBreeder";
-            
+            Mouse.WindowHandle = Window.Handle;
+            Window.AllowUserResizing = false;
         }
         Camera camera;
         /// <summary>
@@ -84,53 +80,16 @@ namespace DragonBreeder
         {
             GraphicObject.ContentManager = Content;
             GraphicObject.GraphicsDevice = GraphicsDevice;
-            // Create a new SpriteBatch, which can be used to draw textures.
-            proc = new GraphicsProcessor(graphics, Content, 1280, 720);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            testModel = new StaticModelTS("sphereTest");
-            //DragonTest = new AnimatedModel("Dragons/Tail/testTail");
-            //instancedModel = new TerrainModel("redBox");
-           // DragonTest.World =  Matrix.CreateTranslation(0, 0.0f, 0);
-            //testAnimation.GetMesh("miecz001").localTransform *= Matrix.CreateTranslation(0.07f, -0.12f, -0.15f);
-          //  DragonTest.startAnimation("wave");
-            testModel.DispalcementMap = Content.Load<Texture2D>("randomDots");
-            testModel.World = Matrix.CreateScale(1)* Matrix.CreateTranslation(0, 0, 0);
-            proc.LoadContent();
-            light.Position = new Vector3(1, 2, 1);
-            light.Color = new Vector3(1, 1, 1);
-            light.Distance = 10.0f;
-            proc.Add(light);
-            pLight.Position = new Vector3(0, 0, 0);
-            pLight.Distance = 2.0f;
-            pLight.Color = Color.OrangeRed.ToVector3();
-            proc.Add(pLight);
-           // proc.Add(DragonTest);
-            camera = proc.Camera;
-            camera.Position = new Vector3(0, 0, 0);
-            camera.LookAt = new Vector3(0, 0, 1);
-            dirUnit = new Vector3(0, -0.1f, 0.9f);
-            proc.Add(testModel);
-            dragon1.LoadContent();
-            dragon1.World = (Matrix.CreateTranslation(0, 0, -5));
-            dragon1.AddToGraphicsProcessor(proc);
-
-            materialTerrain = new TerrainMaterial(Color.LightBlue);
-            materialTerrain.displacementMap = Content.Load<Texture2D>("zakopane");
-            materialTerrain.layersMap = Content.Load<Texture2D>("blendMap");
-            materialTerrain.Textures = new Texture2Drgba();
-            materialTerrain.Textures.Base = Content.Load<Texture2D>("large_grass");
-            materialTerrain.Textures.R = Content.Load<Texture2D>("bmpTestFile");
-            materialTerrain.Textures.G = Content.Load<Texture2D>("grassRock");
-            materialTerrain.Textures.B = Content.Load<Texture2D>("snowHill");
-            materialTerrain.Textures.A = Content.Load<Texture2D>("sand02");
-
-
-            terrain = new TerrainModel(new Quad(GraphicsDevice, 40), materialTerrain);
-            terrain.Camera = camera;
-            terrain.World = Matrix.CreateScale(20, 20, 2) * Matrix.CreateRotationX(MathHelper.PiOver2) * Matrix.CreateTranslation(0,-1,0);
-            proc.Add(terrain);
-            clouds = new SkyCloudSystem(100);
-            clouds.LoadContent();
+            
+            if (this.modePicker == 1)
+                mode = new FreeCameraMode();
+            if (this.modePicker == 2)
+            {
+                mode = new TerrainEditMode();
+            }
+            mode.LoadContent(this, GraphicsDevice, Content);
+            // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
         }
 
@@ -140,13 +99,10 @@ namespace DragonBreeder
         /// </summary>
         protected override void UnloadContent()
         {
+            Content.Unload();
             // TODO: Unload any non ContentManager content here
         }
-        bool raise = true;
-        Vector2 angle = new Vector2();
-        Vector3 dirUnit = new Vector3(0, 0, 1);
-        float disp = 0.0f;
-        Vector2 MousePos = new Vector2();
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -157,89 +113,11 @@ namespace DragonBreeder
             
             // Allows the game to exit
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
-            Vector3 CamPos = camera.Position;
-            float camspeed = 0.2f;
-            float lightspeed = 0.05f;
-            //Vector3 LightPos = light.lightPosition;
-            MouseState mouseState = Mouse.GetState();
-            KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Escape))
-                this.Exit();
             this.IsMouseVisible = true;
-            if (mouseState.RightButton == ButtonState.Pressed)
-            {
-                this.IsMouseVisible = false;
-                angle.X += (MousePos.X - mouseState.X) * 0.1f;
-                angle.Y -= (MousePos.Y - mouseState.Y) * 0.1f;
-                if ((MousePos.Y - mouseState.Y) != 0 || (MousePos.X - mouseState.X) != 0)
-                {
-                    dirUnit.X = MathHelper.ToRadians(angle.X);
-                    dirUnit = new Vector3(0, 0, 1);
-                    dirUnit = Vector3.Transform(dirUnit, Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(angle.X), MathHelper.ToRadians(-angle.Y), 0));
-                    dirUnit *= camspeed;
-                }
-            }
-            else
-            {
-                MousePos = new Vector2(mouseState.X, mouseState.Y);
-            }
-            if (keyboardState.IsKeyDown(Keys.S))
-            {
-                CamPos += dirUnit;
-                //  CamPos.Z += dirUnit.Z;
-            }
-            if (keyboardState.IsKeyDown(Keys.W))
-            {
-                CamPos -= dirUnit;
-                // CamPos.Z -= dirUnit.Z;
-            }
-            if (keyboardState.IsKeyDown(Keys.A))
-            {
-                CamPos -= Vector3.Cross(Vector3.UnitY, dirUnit);
-                //  CamPos.Z += dirUnit.Z;
-            }
-            if (keyboardState.IsKeyDown(Keys.D))
-            {
-                CamPos += Vector3.Cross(Vector3.UnitY, dirUnit);
-                // CamPos.Z -= dirUnit.Z;
-            }
-            if (keyboardState.IsKeyDown(Keys.Space))
-            {
-                PointLight p = new PointLight();
-                p.Position = camera.Position;
-                p.Color = Color.Blue.ToVector3();
-                p.Distance = 2;
-                proc.Add(p);
-            }
+            mode.Update(gameTime);
 
-            if (mouseState.RightButton == ButtonState.Pressed)
-                Mouse.SetPosition((int)MousePos.X, (int)MousePos.Y);
-            camera.LookAt = CamPos - dirUnit * 30;
-            camera.Position = CamPos;
-            //DragonTest.Update(gameTime, true);
-            testModel.EyeDirection = Vector3.Normalize( -camera.LookAt + camera.Position);
-            if ((raise == true) && (disp <= 0.1f))
-            {
-                disp += 0.01f;
-                if (disp > 0.1f)
-                {
-                    raise = false;
-                }
-            }
-            if ((raise == false && disp >= -0.0f))
-            {
-                disp -= 0.01f;
-                if (disp < 0.0f)
-                {
-                    raise = true;
-                }
-            }
-            
-            testModel.DisplacementScale = disp;
-            dragon1.Update(gameTime);
             base.Update(gameTime);
         }
-        RenderTarget2D temp;
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -247,18 +125,8 @@ namespace DragonBreeder
         protected override void Draw(GameTime gameTime)
         {
 
-            proc.G_BufferDraw();
-       //    GraphicsDevice.setNormalView();
-         //   GraphicsDevice.setWireframeView();
-           proc.LightBufferDraw();
-           temp = proc.CombineLightingAndAlbedo();
-            GraphicsDevice.SetRenderTarget(0, null);
-            GraphicsDevice.Clear(new Color(255,0,0,255)/*Wild blue yonder*/);
-            
-            spriteBatch.Begin();
-            spriteBatch.Draw(temp, new Rectangle(0, 0, 1280, 720), Color.White);
-            spriteBatch.End();
-           // clouds.Draw(camera);
+          //  GraphicsDevice.setWireframeView();
+            mode.Draw();
             base.Draw(gameTime);
         }
     }

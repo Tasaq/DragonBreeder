@@ -34,7 +34,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticModel.fx">
+    <Compile Include="Engine\StaticModel.fx">
       <Name>StaticModel</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
@@ -50,28 +50,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PointLight.fx">
+    <Compile Include="Engine\PointLight.fx">
       <Name>PointLight</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Combine.fx">
+    <Compile Include="Engine\Combine.fx">
       <Name>Combine</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectionalLight.fx">
+    <Compile Include="Engine\DirectionalLight.fx">
       <Name>DirectionalLight</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimatedModel.fx">
+    <Compile Include="Engine\AnimatedModel.fx">
       <Name>AnimatedModel</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
@@ -104,7 +104,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Terrain.fx">
+    <Compile Include="Engine\Terrain.fx">
       <Name>Terrain</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
@@ -194,7 +194,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StaticModelTS.fx">
+    <Compile Include="Engine\StaticModelTS.fx">
       <Name>StaticModelTS</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
@@ -212,6 +212,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arial.spritefont">
+      <Name>Arial</Name>
+      <Importer>JBBRXG11SpriteFontContentImporter</Importer>
+      <Processor>JBBRXG11SpriteFontContentProcessor</Processor>
+    </Compile>
     <None Include="Dragons\Body\testBody.xml">
       <Name>testBody</Name>
       <Importer>XmlImporter</Importer>
@@ -228,6 +233,18 @@
       <Importer>JBBRXG11FBXModelContentImporter</Importer>
       <Processor>JBBRXG11FBXModelContentProcessor</Processor>
       <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="sphere.FBX">
+      <Name>sphere</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>0.01</ProcessorParameters_ResizeScale>
+    </Compile>
+    <Compile Include="zakopaneTest.FBX">
+      <Name>zakopaneTest</Name>
+      <Importer>JBBRXG11FBXModelContentImporter</Importer>
+      <Processor>JBBRXG11FBXModelContentProcessor</Processor>
+      <ProcessorParameters_ResizeScale>1</ProcessorParameters_ResizeScale>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +287,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudySky.fx">
+    <Compile Include="Engine\CloudySky.fx">
       <Name>CloudySky</Name>
       <Importer>JBBRXG11EffectContentImporter</Importer>
       <Processor>JBBRXG11EffectContentProcessor</Processor>
@@ -311,6 +328,120 @@
       <Name>sun</Name>
       <Importer>JBBRXG11Texture2DContentImporter</Importer>
       <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\Scroll.png">
+      <Name>Scroll</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
+    </Compile>
+    <Compile Include="Editor\Scroller.png">
+      <Name>Scroller</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\HeightMapPainter.fx">
+      <Name>HeightMapPainter</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\CopyTexture.fx">
+      <Name>CopyTexture</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\TestButton.png">
+      <Name>TestButton</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+    <Compile Include="Editor\TestButtonPressed.png">
+      <Name>TestButtonPressed</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\TerrainAlt.fx">
+      <Name>TerrainAlt</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\MegaParticle.fx">
+      <Name>MegaParticle</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\PostProcess.fx">
+      <Name>PostProcess</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Noise.bmp">
+      <Name>Noise</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Normals\black.jpg">
+      <Name>black</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Normals\kamyczki_0.jpg">
+      <Name>kamyczki_0</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Normals\bmpTestFile.bmp">
+      <Name>bmpTestFile</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Normals\large_grass.jpg">
+      <Name>large_grass</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Normals\snowHill.jpg">
+      <Name>snowHill</Name>
+      <Importer>JBBRXG11Texture2DContentImporter</Importer>
+      <Processor>JBBRXG11Texture2DContentProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Engine\VSM.fx">
+      <Name>VSM</Name>
+      <Importer>JBBRXG11EffectContentImporter</Importer>
+      <Processor>JBBRXG11EffectContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

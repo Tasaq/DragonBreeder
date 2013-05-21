@@ -36,7 +36,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DragonBreeder.Graphics
 {
-    class AnimatedModel : GraphicObject, IModelEntity
+    public class AnimatedModel : GraphicObject, IModelEntity
     {
         bool swapCullMode = false;
         public bool SwapCullMode { get { return swapCullMode; } set { swapCullMode = value; } }
@@ -52,7 +52,7 @@ namespace DragonBreeder.Graphics
             technique = "Render";
             model = ContentManager.Load<Model>(name);
             World = Matrix.CreateTranslation(0,0,0);
-            effect = ContentManager.Load<Effect>("AnimatedModel");
+            effect = ContentManager.Load<Effect>("Engine/AnimatedModel");
             foreach (ModelMesh mesh in model.Meshes)
             {
                 if (mesh.Material.texture == null)

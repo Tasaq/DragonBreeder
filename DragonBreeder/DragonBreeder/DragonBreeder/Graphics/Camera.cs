@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace DragonBreeder
 {
-    class Camera
+    public class Camera
         {
         private Matrix projectionMatrix;
         /// <summary>
@@ -164,14 +164,32 @@ namespace DragonBreeder
         /// </summary>
         public Camera()
         {
-            nearPlane =1;
+            nearPlane = 1;
             position = Vector3.Zero;
             lookAt = Vector3.Forward;
             fov = 45;
             ShutterSpeed = 1;
             tiltNormal = Vector3.Up;
             farPlane = 50.0f;
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), 16.0f/9.0f, .1f, farPlane);
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), 16.0f / 9.0f, .1f, farPlane);
+            viewMatrix = Matrix.CreateLookAt(position, lookAt, tiltNormal);
+            frustrum = new BoundingFrustum(viewMatrix * projectionMatrix);
+        }
+        /// <summary>
+        /// Create camera at Zero position looking forward
+        /// </summary>
+        public Camera(float width, float height)
+        {
+            this.width = width;
+            this.height = height;
+            nearPlane = 1;
+            position = Vector3.Zero;
+            lookAt = Vector3.Forward;
+            fov = 45;
+            ShutterSpeed = 1;
+            tiltNormal = Vector3.Up;
+            farPlane = 50.0f;
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(fov), width / height, .1f, farPlane);
             viewMatrix = Matrix.CreateLookAt(position, lookAt, tiltNormal);
             frustrum = new BoundingFrustum(viewMatrix * projectionMatrix);
         }

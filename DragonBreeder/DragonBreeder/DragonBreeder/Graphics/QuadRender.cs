@@ -36,6 +36,11 @@ using Microsoft.Xna.Framework;
 
 namespace DragonBreeder
 {
+    public enum QuadType
+    {
+        Quad,
+        Tri
+    };
     internal sealed class QuadRender
     {
         private GraphicsDevice GraphicsDevice;
@@ -113,59 +118,124 @@ namespace DragonBreeder
             ibuf = new IndexBuffer(device, ib.Length*4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
             ibuf.SetData<int>(ib);
         }
-        public Quad(GraphicsDevice device, int Count)
+        QuadType qType;
+        public Quad(GraphicsDevice device, int Count, QuadType type)
         {
-            primitiveCount = Count * Count;
-            Count += 1;
-            GraphicsDevice = device;
-            Vector3[] Vertices = new Vector3[Count * Count];
-            Vector3[] Normals = new Vector3[Count * Count];
-            Vector2[] TexCoords = new Vector2[Count * Count];
-            int[,] ind = new int[Count, Count];
-            vertices = new VertexPositionNormalTexture[Count * Count];
-            int ctr = 0;
-            for (int i = 0; i < Count; i++)
+            qType = type;
+            if (qType == QuadType.Quad)
             {
-                for (int j = 0; j < Count; j++)
+                primitiveCount = Count * Count;
+                Count += 1;
+                GraphicsDevice = device;
+                Vector3[] Vertices = new Vector3[Count * Count];
+                Vector3[] Normals = new Vector3[Count * Count];
+                Vector2[] TexCoords = new Vector2[Count * Count];
+                int[,] ind = new int[Count, Count];
+                vertices = new VertexPositionNormalTexture[Count * Count];
+                int ctr = 0;
+                for (int i = 0; i < Count; i++)
                 {
-                    ind[j,i] = ctr;
-                    vertices[ctr].Position = new Vector3((float)j / (float)(Count - 1), (float)i / (float)(Count - 1), 0.5f);
-                    vertices[ctr].Position = Vector3.Subtract( Vector3.Multiply( vertices[ctr].Position,2.0f), new Vector3(1.0f));
-                    vertices[ctr].Normal = new Vector3(0, 0, -1);
-                    vertices[ctr].TextureCoordinate = new Vector2((float)j / (float)(Count - 1), (float)i / (float)(Count - 1));
-                    vertices[ctr].TextureCoordinate =new Vector2(1,1);
-                    ctr++;
+                    for (int j = 0; j < Count; j++)
+                    {
+                        ind[j, i] = ctr;
+                        vertices[ctr].Position = new Vector3((float)j / (float)(Count - 1), (float)i / (float)(Count - 1), 0.5f);
+                        vertices[ctr].Position = Vector3.Subtract(Vector3.Multiply(vertices[ctr].Position, 2.0f), new Vector3(1.0f));
+                        vertices[ctr].Normal = new Vector3(0, 0, -1);
+                        vertices[ctr].TextureCoordinate = new Vector2((float)j / (float)(Count - 1), (float)i / (float)(Count - 1));
+                        vertices[ctr].TextureCoordinate = new Vector2(1, 1);
+                        ctr++;
+                    }
                 }
+                ib = new int[(Count) * (Count) * 4];
+                int counter = 0;
+                for (int j = 0; j < Count - 1; j++)
+                {
+                    for (int i = 0; i < Count - 1; i++)
+                    {
+                        ib[counter++] = ind[i, j];
+                        ib[counter++] = ind[i, j + 1];
+                        ib[counter++] = ind[i + 1, j + 1];
+                        ib[counter++] = ind[i + 1, j];
+
+                    }
+                }
+                vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+                vbuf = new VertexBuffer(GraphicsDevice, vdecl, vertices.Length, BufferUsage.WriteOnly);
+                vbuf.SetData(vertices);
+
+                ibuf = new IndexBuffer(device, ib.Length * 4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
+                ibuf.SetData<int>(ib);
             }
-            ib = new int[(Count ) * (Count) *4];
-            int counter = 0;
-            for (int j = 0; j < Count-1 ; j++)
+            else
             {
-                for (int i = 0; i < Count-1; i++)
+                Count += 1;
+                primitiveCount = Count * Count * 2;
+                GraphicsDevice = device;
+                Vector3[] Vertices = new Vector3[Count * Count];
+                Vector3[] Normals = new Vector3[Count * Count];
+                Vector2[] TexCoords = new Vector2[Count * Count];
+                int[,] ind = new int[Count, Count];
+                vertices = new VertexPositionNormalTexture[Count * Count];
+                int ctr = 0;
+                for (int i = 0; i < Count; i++)
                 {
-                    ib[counter++] = ind[i, j];
-                    ib[counter++] = ind[i, j+1];
-                    ib[counter++] = ind[i + 1, j + 1];
-                    ib[counter++] = ind[i+1, j];
-
+                    for (int j = 0; j < Count; j++)
+                    {
+                        ind[j, i] = ctr;
+                        vertices[ctr].Position = new Vector3((float)j / (float)(Count - 1), (float)i / (float)(Count - 1), 0.5f);
+                        vertices[ctr].Position = Vector3.Subtract(Vector3.Multiply(vertices[ctr].Position, 2.0f), new Vector3(1.0f));
+                        vertices[ctr].Normal = new Vector3(0, 0, -1);
+                        vertices[ctr].TextureCoordinate = new Vector2((float)j / (float)(Count - 1), (float)i / (float)(Count - 1));
+                        vertices[ctr].TextureCoordinate = new Vector2(1, 1);
+                        ctr++;
+                    }
                 }
-            }
-            vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
-            vbuf = new VertexBuffer(GraphicsDevice, vdecl, vertices.Length, BufferUsage.WriteOnly);
-            vbuf.SetData(vertices);
+                ib = new int[(Count) * (Count) * 6];
+                int counter = 0;
+                for (int j = 0; j < Count - 1; j++)
+                {
+                    for (int i = 0; i < Count - 1; i++)
+                    {
+                        ib[counter++] = ind[i, j];
+                        ib[counter++] = ind[i, j + 1];
+                        ib[counter++] = ind[i + 1, j + 1];
 
-            ibuf = new IndexBuffer(device, ib.Length * 4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
-            ibuf.SetData<int>(ib);
+                        ib[counter++] = ind[i, j];
+                        ib[counter++] = ind[i+1, j];
+                        ib[counter++] = ind[i + 1, j + 1];
+
+                    }
+                }
+                vdecl = new VertexDeclaration(VertexPositionNormalTexture.VertexDeclaration.GetVertexElements());
+                
+                vbuf = new VertexBuffer(GraphicsDevice, vdecl, vertices.Length, BufferUsage.WriteOnly);
+                vbuf.SetData<VertexPositionNormalTexture>(vertices);
+                ibuf = new IndexBuffer(device, ib.Length * 4, BufferUsage.WriteOnly, Microsoft.Xna.Framework.Graphics.IndexElementSize.ThirtyTwoBits);
+                ibuf.SetData<int>(ib);
+            }
         }
         public void RenderQuad()
         {
-
-            GraphicsDevice.VertexDeclaration = vdecl;
-            GraphicsDevice.Vertices[0].SetSource(vbuf, 0, vdecl.GetVertexStrideSize());
-            GraphicsDevice.Indices = ibuf;
-           // GraphicsDevice.DrawPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, vertices.Length);
-            GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, 0, vertices.Length, 0, primitiveCount * 2);
-            // GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
-        }
+            if (qType == QuadType.Quad)
+            {
+                GraphicsDevice.VertexDeclaration = vdecl;
+                GraphicsDevice.Vertices[0].SetSource(vbuf, 0, vdecl.GetVertexStrideSize());
+                GraphicsDevice.Indices = ibuf;
+                // GraphicsDevice.DrawPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, vertices.Length);
+                GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, 0, vertices.Length, 0, primitiveCount * 2);
+                // GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
+            }
+            else
+            {
+                GraphicsDevice.VertexDeclaration = vdecl;
+                
+                GraphicsDevice.Vertices[0].SetSource(vbuf, 0, vdecl.GetVertexStrideSize());
+                GraphicsDevice.Indices = ibuf;
+               
+                // GraphicsDevice.DrawPrimitives(PrimitiveType.PatchListWith4ControlPoints, 0, vertices.Length);
+                GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.PatchListWith3ControlPoints, 0, 0, vertices.Length, 0, primitiveCount );
+                // GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionNormalTexture>(PrimitiveType.PatchListWith4ControlPoints, vertices, 0, vertices.Length, ib, 0, primitiveCount*2);
+            }
+         }
     }
 }

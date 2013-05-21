@@ -37,7 +37,7 @@ using DragonBreeder.Graphics;
 
 namespace DragonBreeder
 {
-    class StaticModel : GraphicObject, IModelEntity
+    public class StaticModel : GraphicObject, IModelEntity
     {
         Model model;
 
@@ -52,14 +52,28 @@ namespace DragonBreeder
             technique = "Render";
             model = ContentManager.Load<Model>(name);
             World = Matrix.CreateTranslation(0,0,0);
-            effect = ContentManager.Load<Effect>("StaticModel");
+            effect = ContentManager.Load<Effect>("Engine/StaticModel");
             
             foreach (ModelMesh mesh in model.Meshes)
             {
                 if (mesh.Material.texture == null)
+                {
                     mesh.Technique = "Render";
+                }
                 else
-                    mesh.Technique = "RenderTextureNoBlend";
+                {
+                    
+                    if (System.IO.File.Exists(ContentManager.RootDirectory + "/Normals/" + mesh.Material.texture.Name + ".xnb"))
+                    {
+                        Console.WriteLine(ContentManager.RootDirectory+"/Normals/"+mesh.Material.texture.Name+".xnb");
+                        mesh.Material.normal = ContentManager.Load<Texture2D>("Normals/" + mesh.Material.texture.Name);
+                        mesh.Technique = "RenderTextureNoBlendNormal";
+                    }
+                    else
+                    {
+                        mesh.Technique = "RenderTextureNoBlend";
+                    }
+                }
                 foreach (var part in mesh.MeshParts)
                 {
                     
@@ -82,6 +96,11 @@ namespace DragonBreeder
                 if (mesh.Technique == "RenderTextureNoBlend")
                 {
                     effect.Parameters["ModelTexture"].SetValue(mesh.Material.texture);
+                }
+                if (mesh.Technique == "RenderTextureNoBlendNormal")
+                {
+                    effect.Parameters["ModelTexture"].SetValue(mesh.Material.texture);
+                    effect.Parameters["NormalTexture"].SetValue(mesh.Material.normal);
                 }
 
 

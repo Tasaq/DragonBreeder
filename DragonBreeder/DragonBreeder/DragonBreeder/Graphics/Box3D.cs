@@ -40,7 +40,7 @@ using Microsoft.Xna.Framework;
 namespace DragonBreeder.Graphics
 {
 
-     class Box3D : GraphicObject
+    public class Box3D : GraphicObject
     {
         JBBRXG11.VertexDeclaration vdecl;
         public BoundingBox boundignBox { get; set; }

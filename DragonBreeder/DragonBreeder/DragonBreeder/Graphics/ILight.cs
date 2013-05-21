@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace DragonBreeder
 {
-    interface ILight
+    public interface ILight
     {
          Vector3 Position { get; set; }
          float Distance { get; set; }

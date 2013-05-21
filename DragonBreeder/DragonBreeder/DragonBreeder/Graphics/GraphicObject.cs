@@ -36,7 +36,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DragonBreeder.Graphics
 {
-    class GraphicObject
+    public class GraphicObject
     {
         static public ContentManager ContentManager { get; set; }
         static public GraphicsDevice GraphicsDevice { get; set; }

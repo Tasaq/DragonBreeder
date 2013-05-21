@@ -35,7 +35,7 @@ using MathHelper = Microsoft.Xna.Framework.MathHelper;
 
 namespace DragonBreeder
 {
-    class PointLight : ILight
+    public class PointLight : ILight
     {
         Vector3 position;
         Vector3 color;

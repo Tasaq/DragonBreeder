@@ -5,6 +5,7 @@ namespace DragonBreeder
 #if WINDOWS || XBOX
     static class Program
     {
+        [STAThread]
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

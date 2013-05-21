@@ -37,7 +37,7 @@ using DragonBreeder.Graphics;
 
 namespace DragonBreeder
 {
-    class StaticModelTS : GraphicObject, IModelEntity
+    public class StaticModelTS : GraphicObject, IModelEntity
     {
         Model model;
         public Model Model { get { return model; } }
@@ -56,7 +56,7 @@ namespace DragonBreeder
             technique = "Render";
             model = ContentManager.Load<Model>(name);
             World = Matrix.CreateTranslation(0, 0, 0);
-            effect = ContentManager.Load<Effect>("StaticModelTS");
+            effect = ContentManager.Load<Effect>("Engine/StaticModelTS");
 
             foreach (ModelMesh mesh in model.Meshes)
             {
@@ -117,6 +117,35 @@ namespace DragonBreeder
                 foreach (ModelMeshPart part in mesh.MeshParts)
                     part.Effect = effect;
                 mesh.DrawTS();
+            }
+        }
+        public void DrawShadows(CSMdata csm)
+        {
+            if (DispalcementMap != null)
+            {
+                technique = "RenderDepth";
+            }
+            technique = "RenderDepth";
+            effect.CurrentTechnique = effect.Techniques["RenderDepth"];
+            effect.Parameters["ViewProjectionSplits"].SetValue(csm.matrix);
+            effect.Parameters["clipSpace"].SetValue(csm.dists);
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                effect.CurrentTechnique = effect.Techniques[technique];
+                effect.Parameters["World"].SetValue(mesh.localTransform * World);
+
+                    effect.Parameters["DisplacementMap"].SetValue(DispalcementMap);
+                    effect.Parameters["dispPow"].SetValue(DisplacementScale);
+                if (EyeDirection != null)
+                {
+                    effect.Parameters["CameraDirection"].SetValue(EyeDirection);
+                }
+
+                mesh.Effects[0].Begin();
+                mesh.Effects[0].CurrentTechnique.Passes[0].Begin();
+                mesh.DrawTS();
+                mesh.Effects[0].CurrentTechnique.Passes[0].End();
+                mesh.Effects[0].End();
             }
         }
         public ModelMesh GetMesh(string name)

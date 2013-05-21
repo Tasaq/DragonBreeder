@@ -39,14 +39,15 @@ namespace DragonBreeder.Graphics
 {
     struct VertexPointLight : IVertexType
     {
-        Vector4 position;
-        Color color;
-        Vector2 texCoord;
+        public Vector4 position;
+        public Color color;
+        public Vector2 texCoord;
         public readonly static Microsoft.Xna.Framework.Graphics.VertexDeclaration VertexDeclaration = new Microsoft.Xna.Framework.Graphics.VertexDeclaration
         (
             new VertexElement(0, VertexElementFormat.Vector4, VertexElementUsage.Position, 0),
-            new VertexElement(sizeof(float)*4, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-            new VertexElement(sizeof(float) * 4 + sizeof(int), VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+            new VertexElement(sizeof(float) * 4, VertexElementFormat.Color, VertexElementUsage.Color, 0),
+            new VertexElement(sizeof(float)*4+sizeof(uint)*4, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+            //new VertexElement(128 + 64 + 128, VertexElementFormat.Vector4, VertexElementUsage.TextureCoordinate, 2)
         );
         public VertexPointLight(Vector4 pos, Color color, Vector2 textureCoordinate)
         {
@@ -56,23 +57,23 @@ namespace DragonBreeder.Graphics
         }
 
         //Public methods for accessing the components of the custom vertex.
-        public Vector4 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
+        //public Vector4 Position
+        //{
+        //    get { return position; }
+        //    set { position = value; }
+        //}
 
-        public Vector2 TextureCoordinate
-        {
-            get { return texCoord; }
-            set { texCoord = value; }
-        }
+        //public Vector2 TextureCoordinate
+        //{
+        //    get { return texCoord; }
+        //    set { texCoord = value; }
+        //}
 
-        public Color Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
+        //public Vector4 Color
+        //{
+        //    get { return color; }
+        //    set { color = value; }
+        //}
         Microsoft.Xna.Framework.Graphics.VertexDeclaration IVertexType.VertexDeclaration
         {
             get { return VertexDeclaration; }

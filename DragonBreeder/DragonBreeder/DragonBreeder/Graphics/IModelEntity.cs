@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace DragonBreeder
 {
-    interface IModelEntity
+    public interface IModelEntity
     {
         Model Model { get; }
         void SetViewProjection(Matrix VP);

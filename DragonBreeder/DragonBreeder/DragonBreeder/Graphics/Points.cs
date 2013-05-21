@@ -37,18 +37,19 @@ using Microsoft.Xna.Framework;
 namespace DragonBreeder.Graphics
 {
 
-    class LightPoints
+    public class LightPoints
     {
         List<PointLight> points;
         private GraphicsDevice GraphicsDevice;
         JBBRXG11.VertexDeclaration vdecl;
 
         VertexPointLight[] vertices;
+        VertexBuffer vbuf;
+        public int Count { get { return points.Count; } }
         public LightPoints(GraphicsDevice device)
         {
             GraphicsDevice = device;
             vdecl = new VertexDeclaration(VertexPointLight.VertexDeclaration.GetVertexElements());
-
             points = new List<PointLight>();
         }
         public void Add(PointLight light)
@@ -68,19 +69,24 @@ namespace DragonBreeder.Graphics
                 for (int i = 0; i < points.Count; i++)
                 {
 
-                    vertices[i].Position = new Vector4( points[i].Position,points[i].Distance);
-                    vertices[i].Color = new Color( points[i].Color);
-                    vertices[i].TextureCoordinate = new Vector2(0.5f,0.5f);
+                    vertices[i].position =  new Vector4(points[i].Position, points[i].Distance);
+                    vertices[i].color = new Color(points[i].Color);
+                    vertices[i].texCoord = new Vector2(1.0f,100.5f);
                 }
             }
+             
         }
-        public void Draw()
+        public void Draw(Effect effect)
         {
             Update();
             if (vertices.Length > 0)
             {
                 GraphicsDevice.VertexDeclaration = vdecl;
+                effect.Begin();
+                effect.CurrentTechnique.Passes[0].Begin();
                 GraphicsDevice.DrawUserPrimitives<VertexPointLight>(PrimitiveType.PointList, vertices, 0, vertices.Length);
+                effect.CurrentTechnique.Passes[0].End();
+                effect.End();
             }
         }
     }

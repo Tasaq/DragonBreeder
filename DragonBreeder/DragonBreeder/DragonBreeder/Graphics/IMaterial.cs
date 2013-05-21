@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DragonBreeder
 {
-    interface IMaterial
+    public interface IMaterial
     {
          void setShader();
     }

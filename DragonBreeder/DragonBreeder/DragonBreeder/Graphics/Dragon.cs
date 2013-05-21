@@ -7,7 +7,7 @@ using JBBRXG11;
 
 namespace DragonBreeder.Graphics
 {
-    class Dragon
+    public class Dragon
     {
         public Matrix World { get; set; }
         static readonly int bodyCount = 1;
